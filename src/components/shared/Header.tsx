@@ -1,11 +1,11 @@
 import React from "react";
 import logo from "../../assets/Logo.png";
-import "../../styles/components/Header.scss";
+import "../../styles/components/Header.css";
 
 const Header: React.FC = () => (
-  <div className="Header">
-    <p className="Header__title">SkinTell</p>
-    <img src={logo} alt="logo" className="Header__title"></img>
+  <div className="header">
+    <p className="header__title">Skintelligent</p>
+    <img src={logo} alt="logo" className="header__image"></img>
   </div>
 );
 

@@ -1,0 +1,12 @@
+[
+  {
+    "label": "Dry skin",
+    "value": "0",
+    "description": "Dry skin causes your skin to have a rough texture because it doesn't have enough moisture. Dry skin is very common. The medical term for dry skin is xeroderma."
+  },
+  {
+    "label": "Wrinkles",
+    "value": "1",
+    "description": "Wrinkles are a natural part of aging. These lines and creases in the skin are most likely to form on skin that's often exposed to the sun, such as the face, neck, hands and forearms."
+  }
+]
