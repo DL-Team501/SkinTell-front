@@ -1,7 +1,5 @@
-// src/CameraAndUpload.tsx
 import React from "react";
 import "../../styles/components/CameraAndUpload.css";
-
 export interface ICameraAndUploadProps {
   photoSrc: string | null;
   setPhotoSrc: (photo: string | null) => void;

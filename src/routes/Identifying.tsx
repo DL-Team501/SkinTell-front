@@ -19,7 +19,10 @@ const Identifying: React.FC = () => {
       <Header />
       {!(classification && photoSrc) ? (
         <div className="identifying__container">
-          <p className="identifying__subTitle">Identifying Your Skin</p>
+          <p className="identifying__subTitle generalText">
+            Identifying Your Skin
+          </p>
+          <p className="generalText">Take or upload a picture of your face</p>
           <CameraAndUpload photoSrc={photoSrc} setPhotoSrc={setPhotoSrc} />
         </div>
       ) : (
@@ -29,10 +32,10 @@ const Identifying: React.FC = () => {
             src={photoSrc}
             alt="Captured or Uploaded"
           />
-          <p className="identifying__subTitle">
+          <p className="identifying__subTitle generalText">
             {allClassifications.find((c) => c.value === classification)?.label}
           </p>
-          <p className="identifying__description">
+          <p className="generalText">
             {
               allClassifications.find((c) => c.value === classification)
                 ?.description

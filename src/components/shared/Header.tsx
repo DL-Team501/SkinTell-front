@@ -4,7 +4,7 @@ import "../../styles/components/Header.css";
 
 const Header: React.FC = () => (
   <div className="header">
-    <p className="header__title">Skintelligent</p>
+    <p className="header__title generalText">Skintelligent</p>
     <img src={logo} alt="logo" className="header__image"></img>
   </div>
 );

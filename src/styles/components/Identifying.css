@@ -17,16 +17,10 @@
 
 .identifying__subTitle {
   font-size: large;
-  color: var(--main-font-color);
   font-weight: 600;
 }
 
 .identifying__photo {
   height: 10rem;
   width: 10rem;
-}
-
-.identifying__description {
-  text-align: center;
-  color: var(--main-font-color);
 }

@@ -17,3 +17,8 @@
   height: 2.5rem;
   padding: 0 1rem;
 }
+
+.generalText {
+  text-align: center;
+  color: var(--main-font-color);
+}
