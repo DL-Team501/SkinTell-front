@@ -1,0 +1,26 @@
+.identifying {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.identifying__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  margin-top: 2rem;
+  height: 65vh;
+}
+
+.identifying__subTitle {
+  font-size: large;
+  font-weight: 600;
+}
+
+.identifying__photo {
+  height: 10rem;
+  width: 10rem;
+}
