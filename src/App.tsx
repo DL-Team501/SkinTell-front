@@ -13,10 +13,6 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" Component={Home} />
         <Route
-          path="/identifying"
-          element={authenticated ? <Identifying /> : <Navigate to="/login" />}
-        />
-        <Route
           path="/login"
           element={
             <Login
@@ -24,6 +20,10 @@ const App: React.FC = () => {
               setAuthenticated={setAuthenticated}
             />
           }
+        />
+        <Route
+          path="/identifying"
+          element={authenticated ? <Identifying /> : <Navigate to="/login" />}
         />
       </Routes>
     </BrowserRouter>
