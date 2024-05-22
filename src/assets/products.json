@@ -1,0 +1,62 @@
+[
+  {
+    "type": "cleanser",
+    "src": "product2.png",
+    "description": "aaaa"
+  },
+  {
+    "type": "moisterizer",
+    "src": "product1.png",
+    "description": "bbbb"
+  },
+  {
+    "type": "mask",
+    "src": "product3.png",
+    "description": "cccc"
+  },
+  {
+    "type": "cleanser",
+    "src": "product2.png",
+    "description": "aaaa"
+  },
+  {
+    "type": "moisterizer",
+    "src": "product1.png",
+    "description": "bbbb"
+  },
+  {
+    "type": "mask",
+    "src": "product3.png",
+    "description": "cccc"
+  },
+  {
+    "type": "cleanser",
+    "src": "product2.png",
+    "description": "aaaa"
+  },
+  {
+    "type": "moisterizer",
+    "src": "product1.png",
+    "description": "bbbb"
+  },
+  {
+    "type": "mask",
+    "src": "product3.png",
+    "description": "cccc"
+  },
+  {
+    "type": "cleanser",
+    "src": "product2.png",
+    "description": "aaaa"
+  },
+  {
+    "type": "moisterizer",
+    "src": "product1.png",
+    "description": "bbbb"
+  },
+  {
+    "type": "mask",
+    "src": "product3.png",
+    "description": "cccc"
+  }
+]

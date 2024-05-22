@@ -42,4 +42,5 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   );
 };
 
+// export { CameraAndUpload };
 export { CameraAndUpload };

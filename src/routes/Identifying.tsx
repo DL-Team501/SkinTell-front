@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Header } from "../components/shared";
-import { CameraAndUpload } from "../components/Identifying";
-import "../styles/components/Identifying.css";
+import { CameraAndUpload, Header } from "../components/shared";
 import allClassifications from "../assets/classification.json";
+import { useNavigate } from "react-router-dom";
+import "../styles/components/Identifying.css";
 
 const Identifying: React.FC = () => {
   const [classification, setClassification] = useState<string>();
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (photoSrc) {
@@ -14,14 +15,20 @@ const Identifying: React.FC = () => {
     }
   }, [photoSrc]);
 
+  const navToRecommendation = () => {
+    navigate("/recommendation");
+  };
+
+  const navToCheckProduct = () => {
+    navigate("/checkProduct");
+  };
+
   return (
     <div className="identifying">
       <Header />
       {!(classification && photoSrc) ? (
         <div className="identifying__container">
-          <p className="identifying__subTitle generalText">
-            Identifying Your Skin
-          </p>
+          <p className="generalTitle generalText">Identifying Your Skin</p>
           <p className="generalText">Take or upload a picture of your face</p>
           <CameraAndUpload photoSrc={photoSrc} setPhotoSrc={setPhotoSrc} />
         </div>
@@ -32,7 +39,7 @@ const Identifying: React.FC = () => {
             src={photoSrc}
             alt="Captured or Uploaded"
           />
-          <p className="identifying__subTitle generalText">
+          <p className="generalTitle generalText">
             {allClassifications.find((c) => c.value === classification)?.label}
           </p>
           <p className="generalText">
@@ -41,12 +48,17 @@ const Identifying: React.FC = () => {
                 ?.description
             }
           </p>
-          <button className="generalButton__primary">
+          <button
+            className="generalButton__primary"
+            onClick={navToRecommendation}
+          >
             Recommend me a product!
           </button>
         </div>
       )}
-      <button className="generalButton__secondary">Check your product</button>
+      <button className="generalButton__secondary" onClick={navToCheckProduct}>
+        Check your product
+      </button>
     </div>
   );
 };

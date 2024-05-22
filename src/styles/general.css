@@ -22,3 +22,13 @@
   text-align: center;
   color: var(--main-font-color);
 }
+
+.generalTitle {
+  font-size: large;
+  font-weight: 600;
+}
+
+.generalSubTitle {
+  font-size: large;
+  font-weight: 600;
+}
