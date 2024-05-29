@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { Home, Identifying, Login } from "./routes";
+import { CheckProduct, Identifying, Login, Recommendation } from "./routes";
 import "./App.css";
 import "./variables.css";
 import "./styles/general.css";
@@ -11,7 +11,6 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" Component={Home} />
         <Route
           path="/login"
           element={
@@ -24,6 +23,16 @@ const App: React.FC = () => {
         <Route
           path="/identifying"
           element={authenticated ? <Identifying /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/recommendation"
+          element={
+            authenticated ? <Recommendation /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/checkProduct"
+          element={authenticated ? <CheckProduct /> : <Navigate to="/login" />}
         />
       </Routes>
     </BrowserRouter>

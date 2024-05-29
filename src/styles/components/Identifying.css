@@ -12,12 +12,7 @@
   align-items: center;
   height: 100%;
   margin-top: 2rem;
-  height: 65vh;
-}
-
-.identifying__subTitle {
-  font-size: large;
-  font-weight: 600;
+  height: 70vh;
 }
 
 .identifying__photo {

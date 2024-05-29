@@ -1,0 +1,40 @@
+.checkProduct {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.checkProduct__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  margin-top: 2rem;
+  height: 70vh;
+  gap: 1rem;
+}
+
+.checkProduct__photo {
+  height: 10rem;
+  width: 10rem;
+}
+
+.checkProduct__skinTypesList {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  color: var(--main-font-color);
+  gap: 0.3rem;
+}
+
+.checkProduct__skinTypesItem {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.checkProduct__skinTypesClass {
+  font-weight: 600;
+}
