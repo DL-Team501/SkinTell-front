@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CameraAndUpload, Header } from "../components/shared";
 import { useNavigate } from "react-router-dom";
 import "../styles/components/CheckProduct.css";
 import { SkinTypes } from "../generalTypes";
+import { getSkinTypeByIngredients } from "../api/ingredients";
 
 const CheckProduct: React.FC = () => {
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
-  const [matchSkinTypes, setMatchSkinTypes] = useState<SkinTypes[]>([]);
+  const [matchSkinTypes, setMatchSkinTypes] = useState<string[]>([]); // TODO: change to the backend type
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (photoSrc) {
-      setMatchSkinTypes([SkinTypes.dry, SkinTypes.normal]);
-    }
-  }, [photoSrc]);
 
   return (
     <div className="checkProduct">
@@ -24,7 +19,12 @@ const CheckProduct: React.FC = () => {
           <span className="generalText">
             Take a picture of your product's ingredients list
           </span>
-          <CameraAndUpload photoSrc={photoSrc} setPhotoSrc={setPhotoSrc} />
+          <CameraAndUpload
+            photoSrc={photoSrc}
+            setPhotoSrc={setPhotoSrc}
+            imgProccess={getSkinTypeByIngredients}
+            resultSetter={setMatchSkinTypes}
+          />
         </div>
       ) : (
         <div className="checkProduct__container">
