@@ -1,5 +1,7 @@
 export enum SkinTypes {
-  oily = "Oily Skin",
-  normal = "Normal Skin",
-  dry = "Dry Skin",
+  Oily = "Oily Skin",
+  Normal = "Normal Skin",
+  Dry = "Dry Skin",
+  Combination = "Combination skin",
+  Sensitive = "Sensitive skin",
 }
