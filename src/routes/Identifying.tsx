@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CameraAndUpload, Header } from "../components/shared";
 import allClassifications from "../assets/classification.json";
 import { useNavigate } from "react-router-dom";
 import "../styles/components/Identifying.css";
+import { getSkinTypeClassification } from "../api/skinTypeClassification";
 
 const Identifying: React.FC = () => {
-  const [classification, setClassification] = useState<string>();
+  const [classification, setClassification] = useState<string[]>();
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (photoSrc) {
-      setClassification("1");
-    }
-  }, [photoSrc]);
 
   const navToRecommendation = () => {
     navigate("/recommendation");
@@ -30,7 +25,12 @@ const Identifying: React.FC = () => {
         <div className="identifying__container">
           <p className="generalTitle generalText">Identifying Your Skin</p>
           <p className="generalText">Take or upload a picture of your face</p>
-          <CameraAndUpload photoSrc={photoSrc} setPhotoSrc={setPhotoSrc} />
+          <CameraAndUpload
+            photoSrc={photoSrc}
+            setPhotoSrc={setPhotoSrc}
+            imgProccess={getSkinTypeClassification}
+            resultSetter={setClassification}
+          />
         </div>
       ) : (
         <div className="identifying__container">
@@ -40,11 +40,14 @@ const Identifying: React.FC = () => {
             alt="Captured or Uploaded"
           />
           <p className="generalTitle generalText">
-            {allClassifications.find((c) => c.value === classification)?.label}
+            {
+              allClassifications.find((c) => c.value === classification[0])
+                ?.label
+            }
           </p>
           <p className="generalText">
             {
-              allClassifications.find((c) => c.value === classification)
+              allClassifications.find((c) => c.value === classification[0])
                 ?.description
             }
           </p>
