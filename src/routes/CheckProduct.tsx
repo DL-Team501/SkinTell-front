@@ -14,7 +14,7 @@ const CheckProduct: React.FC = () => {
     <div className="checkProduct">
       <Header />
 
-      {!photoSrc ? (
+      {!matchSkinTypes.length ? (
         <div className="checkProduct__container">
           <span className="generalText">
             Take a picture of your product's ingredients list
@@ -30,14 +30,14 @@ const CheckProduct: React.FC = () => {
         <div className="checkProduct__container">
           <img
             className="checkProduct__photo"
-            src={photoSrc}
+            src={photoSrc!}
             alt="Captured or Uploaded"
           />
           <span className="generalText generalTitle">
             Skintelligent Recommends:
           </span>
           <div className="checkProduct__skinTypesList">
-            {Object.values(SkinTypes).map((type) => (
+            {Object.keys(SkinTypes).map((type) => (
               <div className="checkProduct__skinTypesItem">
                 <span className="checkProduct__skinTypesClass">
                   {matchSkinTypes.includes(type) ? "V" : "X"}

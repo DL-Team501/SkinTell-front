@@ -13,7 +13,7 @@ export interface IProduct {
 }
 
 const Recommendation: React.FC = () => {
-  const skinType = SkinTypes.dry;
+  const skinType = SkinTypes.Dry;
   const [recommendedProducts, setRecommendedProducts] =
     useState<IProduct[]>(products);
 
