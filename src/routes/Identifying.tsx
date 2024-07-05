@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { CameraAndUpload, Header } from "../components/shared";
 import allClassifications from "../assets/classification.json";
 import { useNavigate } from "react-router-dom";
@@ -18,13 +18,18 @@ const Identifying: React.FC = () => {
     navigate("/checkProduct");
   };
 
+  const displayedCalssification = useMemo(
+    () => allClassifications.find((c) => c.value === classification?.[0]),
+    [classification]
+  );
+
   return (
     <div className="identifying">
       <Header />
       {!(classification && photoSrc) ? (
         <div className="identifying__container">
           <p className="generalTitle generalText">Identifying Your Skin</p>
-          <p className="generalText">Take or upload a picture of your face</p>
+          <p className="generalText ">Take or upload a picture of your face</p>
           <CameraAndUpload
             photoSrc={photoSrc}
             setPhotoSrc={setPhotoSrc}
@@ -40,16 +45,10 @@ const Identifying: React.FC = () => {
             alt="Captured or Uploaded"
           />
           <p className="generalTitle generalText">
-            {
-              allClassifications.find((c) => c.value === classification[0])
-                ?.label
-            }
+            {displayedCalssification?.label}
           </p>
-          <p className="generalText">
-            {
-              allClassifications.find((c) => c.value === classification[0])
-                ?.description
-            }
+          <p className="generalText calssification__description">
+            {displayedCalssification?.description}
           </p>
           <button
             className="generalButton__primary"

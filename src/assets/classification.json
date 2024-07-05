@@ -1,12 +1,42 @@
 [
   {
-    "label": "Dry skin",
-    "value": "0",
+    "value": "Dry skin",
+    "label": "Dry Skin",
     "description": "Dry skin causes your skin to have a rough texture because it doesn't have enough moisture. Dry skin is very common. The medical term for dry skin is xeroderma."
   },
   {
-    "label": "Wrinkles",
-    "value": "1",
+    "value": "wrinkle",
+    "label": "Wrinkle",
     "description": "Wrinkles are a natural part of aging. These lines and creases in the skin are most likely to form on skin that's often exposed to the sun, such as the face, neck, hands and forearms."
+  },
+  {
+    "value": "Dark Circle",
+    "label": "Dark Circle",
+    "description": "Dark circles are those shadowy areas that appear under your eyes. They can be caused by a variety of factors, including fatigue, allergies, genetics, and sun exposure. While they're usually harmless, some people find them bothersome cosmetically."
+  },
+  {
+    "value": "Melasma",
+    "label": "Melasma",
+    "description": "Melasma, also called chloasma, is a common skin condition that causes brown or grayish patches to form on the face, often on the cheeks, forehead, bridge of the nose, upper lip, and chin. It's more frequent in women, especially those who are pregnant (often referred to as 'the mask of pregnancy') or taking hormonal medications like birth control pills."
+  },
+  {
+    "value": "Normal Skin",
+    "label": "Normal Skin",
+    "description": "Normal skin is the ideal skin type. It has a balanced appearance, neither too oily nor too dry. It feels smooth and supple, with minimal visible pores. People with normal skin generally experience fewer breakouts and blemishes."
+  },
+  {
+    "value": "Oily Skin",
+    "label": "Oily Skin",
+    "description": "Oily skin produces excess sebum, an oil made by glands in the skin. This can make the skin appear shiny, especially in the T-zone (forehead, nose, and chin). People with oily skin are more prone to breakouts like pimples and blackheads."
+  },
+  {
+    "value": "pustule",
+    "label": "Pustule",
+    "description": "A pustule is a small, raised, white-headed bump on the skin filled with pus, a yellowish-white fluid made up of white blood cells and dead skin cells. Pustules are a common feature of acne, but they can also be caused by other skin conditions like folliculitis or rosacea."
+  },
+  {
+    "value": "skin-pore",
+    "label": "Skin Pore",
+    "description": " Skin pores are tiny openings on the surface of your skin. They allow sweat and oil to escape from the sebaceous glands beneath the skin's surface. Pores are naturally visible to some degree, but their size and appearance can vary depending on skin type, genetics, and sun damage."
   }
 ]

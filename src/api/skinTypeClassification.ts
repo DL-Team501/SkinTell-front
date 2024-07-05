@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getSkinTypeClassification = async (formData: FormData) => {
   const response = await axios.post(
-    "http://localhost:8000/ingredients-list",
+    "http://localhost:3000/skin-analysis",
     formData,
     {
       headers: {
