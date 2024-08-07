@@ -42,6 +42,10 @@ const Login: React.FC<ILoginProps> = ({ authenticated, setAuthenticated }) => {
     }
   };
 
+  const navToRegistration = () => {
+    navigate("/registration");
+  };
+
   return (
     <div className="login">
       <img src={logo} alt="logo" className="login__image"></img>
@@ -64,7 +68,10 @@ const Login: React.FC<ILoginProps> = ({ authenticated, setAuthenticated }) => {
           placeholder="Password"
         ></input>
         <button type="submit" className="login__button generalButton__primary">
-          Sign in
+          Log in
+        </button>
+        <button className="generalButton__primary" onClick={navToRegistration}>
+          I'm new here
         </button>
         {errorMessage && <p className="login__errorMessage">{errorMessage}</p>}
       </form>

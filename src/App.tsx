@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { CheckProduct, Identifying, Login, Recommendation } from "./routes";
+import {
+  CheckProduct,
+  Identifying,
+  Login,
+  Recommendation,
+  Registration,
+} from "./routes";
 import "./App.css";
 import "./variables.css";
 import "./styles/general.css";
@@ -34,6 +40,7 @@ const App: React.FC = () => {
           path="/checkProduct"
           element={authenticated ? <CheckProduct /> : <Navigate to="/login" />}
         />
+        <Route path="/registration" element={<Registration />} />
       </Routes>
     </BrowserRouter>
   );
