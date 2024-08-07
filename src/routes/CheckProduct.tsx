@@ -9,6 +9,7 @@ const CheckProduct: React.FC = () => {
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
   const [matchSkinTypes, setMatchSkinTypes] = useState<string[]>([]); // TODO: change to the backend type
   const navigate = useNavigate();
+  const [isCropping, setIsCropping] = useState(false);
 
   return (
     <div className="checkProduct">
@@ -24,6 +25,8 @@ const CheckProduct: React.FC = () => {
             setPhotoSrc={setPhotoSrc}
             imgProccess={getSkinTypeByIngredients}
             resultSetter={setMatchSkinTypes}
+            isCropping={isCropping}
+            setIsCropping={setIsCropping}
           />
         </div>
       ) : (
@@ -38,7 +41,7 @@ const CheckProduct: React.FC = () => {
           </span>
           <div className="checkProduct__skinTypesList">
             {Object.keys(SkinTypes).map((type) => (
-              <div className="checkProduct__skinTypesItem">
+              <div className="checkProduct__skinTypesItem" key={type}>
                 <span className="checkProduct__skinTypesClass">
                   {matchSkinTypes.includes(type) ? "V" : "X"}
                 </span>

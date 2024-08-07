@@ -8,6 +8,7 @@ import { getSkinTypeClassification } from "../api/skinTypeClassification";
 const Identifying: React.FC = () => {
   const [classification, setClassification] = useState<string[]>();
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
+  const [isCropping, setIsCropping] = useState(false);
   const navigate = useNavigate();
 
   const navToRecommendation = () => {
@@ -28,13 +29,21 @@ const Identifying: React.FC = () => {
       <Header />
       {!(classification && photoSrc) ? (
         <div className="identifying__container">
-          <p className="generalTitle generalText">Identifying Your Skin</p>
-          <p className="generalText ">Take or upload a picture of your face</p>
+          {!isCropping && (
+            <p className="generalTitle generalText">Identifying Your Skin</p>
+          )}
+          {!isCropping && (
+            <p className="generalText ">
+              Take or upload a picture of your face
+            </p>
+          )}
           <CameraAndUpload
             photoSrc={photoSrc}
             setPhotoSrc={setPhotoSrc}
             imgProccess={getSkinTypeClassification}
             resultSetter={setClassification}
+            isCropping={isCropping}
+            setIsCropping={setIsCropping}
           />
         </div>
       ) : (
