@@ -30,12 +30,12 @@ const Identifying: React.FC = () => {
       {!(classification && photoSrc) ? (
         <div className="identifying__container">
           {!isCropping && (
-            <p className="generalTitle generalText">Identifying Your Skin</p>
-          )}
-          {!isCropping && (
-            <p className="generalText ">
-              Take or upload a picture of your face
-            </p>
+            <>
+              <p className="generalTitle generalText">Identifying Your Skin</p>
+              <p className="generalText ">
+                Take or upload a picture of your face
+              </p>
+            </>
           )}
           <CameraAndUpload
             photoSrc={photoSrc}
