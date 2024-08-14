@@ -6,17 +6,39 @@ import "../styles/components/Registration.css";
 const Registration: React.FC = () => {
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    // todo: write to file
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const response = await fetch("http://localhost:8001/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: userName,
+        password: password,
+      }),
+    });
+
+    if (response.ok) {
+      console.log("User registered successfully");
+      navigate("/login");
+    } else {
+      setErrorMessage("This username already exists.");
+      console.error("Failed to register user");
+    }
   };
 
   const onChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorMessage(null);
     setUserName(e.target.value);
   };
 
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorMessage(null);
     setPassword(e.target.value);
   };
 
@@ -43,7 +65,9 @@ const Registration: React.FC = () => {
         >
           Sign in
         </button>
-        {/* {errorMessage && <p className="registration__errorMessage">{errorMessage}</p>} */}
+        {errorMessage && (
+          <p className="registration__errorMessage">{errorMessage}</p>
+        )}
       </form>
     </div>
   );

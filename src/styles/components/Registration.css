@@ -46,3 +46,7 @@
 .registration__button:focus-visible {
   outline: none;
 }
+
+.registration__errorMessage {
+  color: var(--main-font-color);
+}
