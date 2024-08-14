@@ -8,7 +8,5 @@ export interface ClassificationInfo {
 
 export const getClassificationInfo = (
   classification?: string
-): ClassificationInfo | undefined => {
-  console.log(allClassifications);
-  return allClassifications.find(c => c.value === classification);
-};
+): ClassificationInfo | undefined =>
+  allClassifications.find(c => c.value === classification);
