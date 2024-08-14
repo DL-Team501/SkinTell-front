@@ -1,35 +1,47 @@
-import React, { useMemo, useState } from "react";
-import { CameraAndUpload, Header } from "../components/shared";
-import allClassifications from "../assets/classification.json";
-import { useNavigate } from "react-router-dom";
-import "../styles/components/Identifying.css";
-import { getSkinTypeClassification } from "../api/skinTypeClassification";
+import React, { useEffect, useMemo, useState } from 'react';
+import { CameraAndUpload, Header } from '../components/shared';
+import { useNavigate } from 'react-router-dom';
+import '../styles/components/Identifying.css';
+import { getSkinTypeClassification } from '../api/skinTypeClassification';
+import {
+  getLocalStorageClassification,
+  setLocalStorageClassification,
+} from '../util/localstorage';
+import { getClassificationInfo } from '../util/classification';
 
 const Identifying: React.FC = () => {
   const [classification, setClassification] = useState<string[]>();
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setClassification(getLocalStorageClassification());
+  }, []);
+
+  useEffect(() => {
+    setLocalStorageClassification(classification);
+  }, [classification]);
+
   const navToRecommendation = () => {
-    navigate("/recommendation");
+    navigate('/recommendation');
   };
 
   const navToCheckProduct = () => {
-    navigate("/checkProduct");
+    navigate('/checkProduct');
   };
 
   const displayedCalssification = useMemo(
-    () => allClassifications.find((c) => c.value === classification?.[0]),
+    () => getClassificationInfo(classification?.[0]),
     [classification]
   );
 
   return (
-    <div className="identifying">
+    <div className='identifying'>
       <Header />
       {!(classification && photoSrc) ? (
-        <div className="identifying__container">
-          <p className="generalTitle generalText">Identifying Your Skin</p>
-          <p className="generalText ">Take or upload a picture of your face</p>
+        <div className='identifying__container'>
+          <p className='generalTitle generalText'>Identifying Your Skin</p>
+          <p className='generalText '>Take or upload a picture of your face</p>
           <CameraAndUpload
             photoSrc={photoSrc}
             setPhotoSrc={setPhotoSrc}
@@ -38,27 +50,27 @@ const Identifying: React.FC = () => {
           />
         </div>
       ) : (
-        <div className="identifying__container">
+        <div className='identifying__container'>
           <img
-            className="identifying__photo"
+            className='identifying__photo'
             src={photoSrc}
-            alt="Captured or Uploaded"
+            alt='Captured or Uploaded'
           />
-          <p className="generalTitle generalText">
+          <p className='generalTitle generalText'>
             {displayedCalssification?.label}
           </p>
-          <p className="generalText calssification__description">
+          <p className='generalText calssification__description'>
             {displayedCalssification?.description}
           </p>
           <button
-            className="generalButton__primary"
+            className='generalButton__primary'
             onClick={navToRecommendation}
           >
             Recommend me a product!
           </button>
         </div>
       )}
-      <button className="generalButton__secondary" onClick={navToCheckProduct}>
+      <button className='generalButton__secondary' onClick={navToCheckProduct}>
         Check your product
       </button>
     </div>
