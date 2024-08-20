@@ -9,6 +9,8 @@ const Identifying: React.FC = () => {
   const [classification, setClassification] = useState<string[]>();
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
   const [isCropping, setIsCropping] = useState(false);
+  const [heatmap, setHeatmap] = useState<string | null>(null);
+  const [showHeatmap, setShowHeatmap] = useState(false);
   const navigate = useNavigate();
 
   const navToRecommendation = () => {
@@ -23,6 +25,16 @@ const Identifying: React.FC = () => {
     () => allClassifications.find((c) => c.value === classification?.[0]),
     [classification]
   );
+
+  const getClassification = async (formData: FormData) => {
+    const { predicted_class, heatmap } = await getSkinTypeClassification(
+      formData
+    );
+
+    setHeatmap(heatmap);
+
+    return [predicted_class];
+  };
 
   return (
     <div className="identifying">
@@ -40,7 +52,7 @@ const Identifying: React.FC = () => {
           <CameraAndUpload
             photoSrc={photoSrc}
             setPhotoSrc={setPhotoSrc}
-            imgProccess={getSkinTypeClassification}
+            imgProccess={getClassification}
             resultSetter={setClassification}
             isCropping={isCropping}
             setIsCropping={setIsCropping}
@@ -53,9 +65,33 @@ const Identifying: React.FC = () => {
             src={photoSrc}
             alt="Captured or Uploaded"
           />
-          <p className="generalTitle generalText">
-            {displayedCalssification?.label}
-          </p>
+          {heatmap && showHeatmap && (
+            <img
+              className="identifying__photo heatmap"
+              src={`data:image/jpeg;base64,${heatmap}`}
+              alt="heatmap"
+            />
+          )}
+          <div className="classification__title">
+            <p className="generalTitle generalText">
+              {displayedCalssification?.label}
+            </p>
+            {showHeatmap ? (
+              <button
+                className="why__button"
+                onClick={() => setShowHeatmap(false)}
+              >
+                Got it!
+              </button>
+            ) : (
+              <button
+                className="why__button"
+                onClick={() => setShowHeatmap(true)}
+              >
+                Why?
+              </button>
+            )}
+          </div>
           <p className="generalText calssification__description">
             {displayedCalssification?.description}
           </p>

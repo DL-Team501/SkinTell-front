@@ -40,14 +40,26 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
     if (file) {
       const reader: FileReader = new FileReader();
 
-      reader.onload = () => {
-        const fileContent: string | ArrayBuffer | null = reader.result;
+      reader.onload = async () => {
+        try {
+          const fileContent: string | ArrayBuffer | null = reader.result;
 
-        if (typeof fileContent === "string") {
-          setPhotoSrc(fileContent);
-          setIsCropping(true);
-        } else {
-          console.error("File content is not a string.");
+          if (typeof fileContent === "string") {
+            setPhotoSrc(reader.result as string);
+            setIsCropping(true);
+
+            const formData = new FormData();
+
+            formData.append("file", file);
+
+            const response = await imgProccess(formData);
+            resultSetter(response);
+            console.log(response);
+          } else {
+            console.error("File content is not a string.");
+          }
+        } catch (error) {
+          console.error(error);
         }
       };
 
