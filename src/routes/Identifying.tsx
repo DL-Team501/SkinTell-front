@@ -30,10 +30,6 @@ const Identifying: React.FC = () => {
     [classification]
   );
 
-  useEffect(() => {
-    console.log(displayedCalssification);
-  }, [displayedCalssification]);
-
   const getClassification = async (formData: FormData) => {
     const { predicted_class, heatmap } = await getSkinTypeClassification(
       formData,
