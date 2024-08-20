@@ -47,7 +47,23 @@ const Identifying: React.FC = () => {
       {!(classification && photoSrc) ? (
         <div className='identifying__container'>
           <p className='generalTitle generalText'>Identifying Your Skin</p>
-          <p className='generalText '>Take or upload a picture of your face</p>
+          {classification ? (
+            <>
+              <p className='generalText '>
+                Hi, {username}!
+                <br />
+                In your previous picture we saw that you have{' '}
+                <b>{displayedCalssification?.label?.toLowerCase()}</b>
+              </p>
+              <p className='generalText '>
+                Do you want to take or upload a another picture of your face?
+              </p>
+            </>
+          ) : (
+            <p className='generalText '>
+              Take or upload a picture of your face
+            </p>
+          )}
           <CameraAndUpload
             photoSrc={photoSrc}
             setPhotoSrc={setPhotoSrc}
