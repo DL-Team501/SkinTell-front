@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { CameraAndUpload, Header } from '../components/shared';
 import { useNavigate } from 'react-router-dom';
 import '../styles/components/Identifying.css';
