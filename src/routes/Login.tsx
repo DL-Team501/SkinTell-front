@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logo from '../assets/LogoWithText.png';
 import '../styles/components/Login.css';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { usernameState } from '../atoms/username.atom';
 import { classificationState } from '../atoms/classification.atom';
 
@@ -17,6 +17,7 @@ const Login: React.FC<ILoginProps> = ({ authenticated, setAuthenticated }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const setUsernameAtom = useSetRecoilState(usernameState);
   const setClassification = useSetRecoilState(classificationState);
+  const resetClassification = useResetRecoilState(classificationState);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,7 +40,9 @@ const Login: React.FC<ILoginProps> = ({ authenticated, setAuthenticated }) => {
 
       if (response.ok) {
         setUsernameAtom(userName);
-        data.classification && setClassification([data.classification]);
+        data.classification
+          ? setClassification([data.classification])
+          : resetClassification();
         setAuthenticated(true);
         navigate('/identifying');
       } else {
