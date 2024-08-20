@@ -3,26 +3,19 @@ import { CameraAndUpload, Header } from '../components/shared';
 import { useNavigate } from 'react-router-dom';
 import '../styles/components/Identifying.css';
 import { getSkinTypeClassification } from '../api/skinTypeClassification';
-import {
-  getLocalStorageClassification,
-  setLocalStorageClassification,
-} from '../util/localstorage';
 import { getClassificationInfo } from '../util/classification';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { usernameState } from '../atoms/username.atom';
+import { classificationState } from '../atoms/classification.atom';
 
 const Identifying: React.FC = () => {
-  const [classification, setClassification] = useState<string[]>();
+  const [classification, setClassification] =
+    useRecoilState(classificationState);
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
   const [heatmap, setHeatmap] = useState<string | null>(null);
   const [showHeatmap, setShowHeatmap] = useState(false);
+  const username = useRecoilValue(usernameState);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setClassification(getLocalStorageClassification());
-  }, []);
-
-  useEffect(() => {
-    setLocalStorageClassification(classification);
-  }, [classification]);
 
   const navToRecommendation = () => {
     navigate('/recommendation');
@@ -37,9 +30,14 @@ const Identifying: React.FC = () => {
     [classification]
   );
 
+  useEffect(() => {
+    console.log(displayedCalssification);
+  }, [displayedCalssification]);
+
   const getClassification = async (formData: FormData) => {
     const { predicted_class, heatmap } = await getSkinTypeClassification(
-      formData
+      formData,
+      username
     );
 
     setHeatmap(heatmap);

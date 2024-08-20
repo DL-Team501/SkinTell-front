@@ -4,15 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/components/CheckProduct.css';
 import { SkinTypes } from '../generalTypes';
 import { getSkinTypeByIngredients } from '../api/ingredients';
-import { getLocalStorageClassification } from '../util/localstorage';
 import { getClassificationInfo } from '../util/classification';
+import { useRecoilValue } from 'recoil';
+import { classificationState } from '../atoms/classification.atom';
 
 const CheckProduct: React.FC = () => {
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
   const [matchSkinTypes, setMatchSkinTypes] = useState<string[]>([]); // TODO: change to the backend type
+  const classification = useRecoilValue(classificationState);
   const classificationLabel = useMemo<string | undefined>(
-    () => getClassificationInfo(getLocalStorageClassification()?.[0])?.label,
-    []
+    () => getClassificationInfo(classification?.[0])?.label,
+    [classification]
   );
   const navigate = useNavigate();
 
