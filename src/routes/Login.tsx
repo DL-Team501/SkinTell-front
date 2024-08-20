@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import logo from "../assets/LogoWithText.png";
 import "../styles/components/Login.css";
 import { useNavigate } from "react-router-dom";
-import users from "../assets/users.json";
 
 export interface ILoginProps {
   authenticated: boolean;
@@ -15,14 +14,32 @@ const Login: React.FC<ILoginProps> = ({ authenticated, setAuthenticated }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (users.find((u) => u.userName === userName && u.password === password)) {
-      setAuthenticated(true);
-      navigate("/identifying");
-    } else {
-      setErrorMessage("Invalid username or password.");
+    try {
+      const response = await fetch("http://localhost:8001/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: userName,
+          password: password,
+        }),
+      });
+
+      if (response.ok) {
+        setAuthenticated(true);
+        navigate("/identifying");
+      } else {
+        const data = await response.json();
+        setErrorMessage(
+          data.detail ? "Invalid username or password" : "Login failed"
+        );
+      }
+    } catch (error) {
+      setErrorMessage("An error occurred. Please try again.");
     }
   };
 
@@ -40,6 +57,10 @@ const Login: React.FC<ILoginProps> = ({ authenticated, setAuthenticated }) => {
     if (e.key === "Enter") {
       handleSubmit(e);
     }
+  };
+
+  const navToRegistration = () => {
+    navigate("/registration");
   };
 
   return (
@@ -64,7 +85,10 @@ const Login: React.FC<ILoginProps> = ({ authenticated, setAuthenticated }) => {
           placeholder="Password"
         ></input>
         <button type="submit" className="login__button generalButton__primary">
-          Sign in
+          Log in
+        </button>
+        <button className="generalButton__primary" onClick={navToRegistration}>
+          I'm new here
         </button>
         {errorMessage && <p className="login__errorMessage">{errorMessage}</p>}
       </form>

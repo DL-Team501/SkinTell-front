@@ -33,7 +33,9 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             resultSetter([]);
 
             const response = await imgProccess(formData);
-            resultSetter(Array.isArray(response) ? response : [response]);
+
+            // resultSetter(Array.isArray(response) ? response : [response]);
+            resultSetter(response);
           } else {
             console.error('File content is not a string.');
           }
