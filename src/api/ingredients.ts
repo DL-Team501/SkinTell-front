@@ -3,7 +3,7 @@ import { backendUrl } from "./config";
 
 export const getSkinTypeByIngredients = async (formData: FormData) => {
   const response = await axios.post(
-    backendUrl,
+    `${backendUrl}/ingredients-list`,
     formData,
     {
       headers: {
