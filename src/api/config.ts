@@ -1,1 +1,1 @@
-export const backendUrl = "https://skintell-backend-production.up.railway.app/";
+export const backendUrl = "https://skintell-backend-production.up.railway.app";
