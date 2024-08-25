@@ -20,6 +20,27 @@
   width: 10rem;
 }
 
+.heatmap {
+  position: absolute;
+  opacity: 0.4;
+}
+
 .calssification__description {
   width: 60vw
+}
+
+.why__button{
+  cursor: pointer;
+  color: var(--main-bg-color);
+  background-color: mediumseagreen;
+  border: none;
+  border-radius: 0.5rem;
+  height: 1.5rem;
+  padding: 0 0.8rem;
+  margin-left: 10px;
+}
+
+.classification__title{
+  display: flex;
+  align-items: center;
 }
