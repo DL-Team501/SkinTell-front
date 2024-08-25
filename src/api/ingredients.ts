@@ -1,8 +1,9 @@
 import axios from "axios";
+import { backendUrl } from "./config";
 
 export const getSkinTypeByIngredients = async (formData: FormData) => {
   const response = await axios.post(
-    "http://localhost:8001/ingredients-list",
+    `${backendUrl}/ingredients-list`,
     formData,
     {
       headers: {
