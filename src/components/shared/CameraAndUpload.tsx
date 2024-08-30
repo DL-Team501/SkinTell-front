@@ -100,16 +100,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             onZoomChange={setZoom}
             onCropComplete={onCropComplete}
           />
-          <button
-            className="generalButton__primary"
-            onClick={handleSave}
-            style={{
-              position: "absolute",
-              bottom: "10px",
-              left: "50%",
-              transform: "translateX(-50%)",
-            }}
-          >
+          <button className="generalButton__primary save" onClick={handleSave}>
             Save
           </button>
         </div>

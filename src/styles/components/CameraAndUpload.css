@@ -22,3 +22,10 @@
   gap: 1rem;
   margin-top: 1rem;
 }
+
+.save {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
