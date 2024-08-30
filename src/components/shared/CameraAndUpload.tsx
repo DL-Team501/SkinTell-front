@@ -1,5 +1,5 @@
-import React from "react";
-import "../../styles/components/CameraAndUpload.css";
+import React from 'react';
+import '../../styles/components/CameraAndUpload.css';
 export interface ICameraAndUploadProps {
   photoSrc: string | null;
   setPhotoSrc: (photo: string | null) => void;
@@ -24,18 +24,19 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
         try {
           const fileContent: string | ArrayBuffer | null = reader.result;
 
-          if (typeof fileContent === "string") {
+          if (typeof fileContent === 'string') {
             setPhotoSrc(reader.result as string);
 
             const formData = new FormData();
 
-            formData.append("file", file);
+            formData.append('file', file);
+            resultSetter([]);
 
             const response = await imgProccess(formData);
+
             resultSetter(response);
-            console.log(response);
           } else {
-            console.error("File content is not a string.");
+            console.error('File content is not a string.');
           }
         } catch (error) {
           console.error(error);
@@ -47,21 +48,21 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   };
 
   return (
-    <div className="cameraAndUpload">
-      <button className="generalButton__primary">
-        <label htmlFor="fileInput">Open Camera or Upload Photo</label>
+    <div className='cameraAndUpload'>
+      <button className='generalButton__primary'>
+        <label htmlFor='fileInput'>Open Camera or Upload Photo</label>
       </button>
       <input
-        id="fileInput"
-        type="file"
-        accept="image/*"
-        capture="environment"
+        id='fileInput'
+        type='file'
+        accept='image/*'
+        capture='environment'
         onChange={handleFileChange}
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
       />
       {photoSrc && (
-        <div className="photoContainer">
-          <img className="photo" src={photoSrc} alt="Captured or Uploaded" />
+        <div className='photoContainer'>
+          <img className='photo' src={photoSrc} alt='Captured or Uploaded' />
         </div>
       )}
     </div>
