@@ -33,33 +33,16 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
     []
   );
 
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader: FileReader = new FileReader();
+      const reader = new FileReader();
 
-      reader.onload = async () => {
-        try {
-          const fileContent: string | ArrayBuffer | null = reader.result;
-
-          if (typeof fileContent === "string") {
-            setPhotoSrc(reader.result as string);
-            setIsCropping(true);
-
-            const formData = new FormData();
-
-            formData.append("file", file);
-
-            const response = await imgProccess(formData);
-            resultSetter(response);
-            console.log(response);
-          } else {
-            console.error("File content is not a string.");
-          }
-        } catch (error) {
-          console.error(error);
+      reader.onload = () => {
+        const fileContent = reader.result;
+        if (typeof fileContent === "string") {
+          setPhotoSrc(fileContent);
+          setIsCropping(true);
         }
       };
 
