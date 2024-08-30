@@ -1,16 +1,21 @@
 import React, { useMemo, useState } from "react";
 import { CameraAndUpload, Header } from "../components/shared";
-import allClassifications from "../assets/classification.json";
 import { useNavigate } from "react-router-dom";
 import "../styles/components/Identifying.css";
 import { getSkinTypeClassification } from "../api/skinTypeClassification";
+import { getClassificationInfo } from "../util/classification";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { usernameState } from "../atoms/username.atom";
+import { classificationState } from "../atoms/classification.atom";
 
 const Identifying: React.FC = () => {
-  const [classification, setClassification] = useState<string[]>();
+  const [classification, setClassification] =
+    useRecoilState(classificationState);
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
   const [isCropping, setIsCropping] = useState(false);
   const [heatmap, setHeatmap] = useState<string | null>(null);
   const [showHeatmap, setShowHeatmap] = useState(false);
+  const username = useRecoilValue(usernameState);
   const navigate = useNavigate();
 
   const navToRecommendation = () => {
@@ -22,13 +27,14 @@ const Identifying: React.FC = () => {
   };
 
   const displayedCalssification = useMemo(
-    () => allClassifications.find((c) => c.value === classification?.[0]),
+    () => getClassificationInfo(classification?.[0]),
     [classification]
   );
 
   const getClassification = async (formData: FormData) => {
     const { predicted_class, heatmap } = await getSkinTypeClassification(
-      formData
+      formData,
+      username
     );
 
     setHeatmap(heatmap);
@@ -41,13 +47,23 @@ const Identifying: React.FC = () => {
       <Header />
       {!(classification && photoSrc) ? (
         <div className="identifying__container">
-          {!isCropping && (
+          <p className="generalTitle generalText">Identifying Your Skin</p>
+          {classification ? (
             <>
-              <p className="generalTitle generalText">Identifying Your Skin</p>
               <p className="generalText ">
-                Take or upload a picture of your face
+                Hi, {username}!
+                <br />
+                In your previous picture we saw that you have{" "}
+                <b>{displayedCalssification?.label?.toLowerCase()}</b>
+              </p>
+              <p className="generalText ">
+                Do you want to take or upload a another picture of your face?
               </p>
             </>
+          ) : (
+            <p className="generalText ">
+              Take or upload a picture of your face
+            </p>
           )}
           <CameraAndUpload
             photoSrc={photoSrc}
