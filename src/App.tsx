@@ -19,6 +19,7 @@ const App: React.FC = () => {
     <RecoilRoot>
       <BrowserRouter>
         <Routes>
+          <Route path='/' element={<Navigate to='/login' />} />
           <Route
             path='/login'
             element={
