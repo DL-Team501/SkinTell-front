@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from "react";
-import Cropper, { Area } from "react-easy-crop";
-import getCroppedImg from "../../utils/cropImage";
-import "../../styles/components/CameraAndUpload.css";
+import React, { useState, useCallback } from 'react';
+import Cropper, { Area } from 'react-easy-crop';
+import getCroppedImg from '../../utils/cropImage';
+import '../../styles/components/CameraAndUpload.css';
 
 export interface ICameraAndUploadProps {
   photoSrc: string | null;
@@ -44,19 +44,20 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
         try {
           const fileContent: string | ArrayBuffer | null = reader.result;
 
-          if (typeof fileContent === "string") {
+          if (typeof fileContent === 'string') {
             setPhotoSrc(reader.result as string);
             setIsCropping(true);
 
             const formData = new FormData();
 
-            formData.append("file", file);
+            formData.append('file', file);
+            resultSetter([]);
 
             const response = await imgProccess(formData);
+
             resultSetter(response);
-            console.log(response);
           } else {
-            console.error("File content is not a string.");
+            console.error('File content is not a string.');
           }
         } catch (error) {
           console.error(error);
@@ -83,7 +84,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
     try {
       const croppedImage = await getCroppedImg(photoSrc, croppedAreaPixels);
       const formData = new FormData();
-      formData.append("file", croppedImage);
+      formData.append('file', croppedImage);
 
       const response = await imgProccess(formData);
       resultSetter(Array.isArray(response) ? response : [response]);
@@ -94,20 +95,20 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   };
 
   return (
-    <div className="cameraAndUpload">
-      <button className="generalButton__primary">
-        <label htmlFor="fileInput">Open Camera or Upload Photo</label>
+    <div className='cameraAndUpload'>
+      <button className='generalButton__primary'>
+        <label htmlFor='fileInput'>Open Camera or Upload Photo</label>
       </button>
       <input
-        id="fileInput"
-        type="file"
-        accept="image/*"
-        capture="environment"
+        id='fileInput'
+        type='file'
+        accept='image/*'
+        capture='environment'
         onChange={handleFileChange}
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
       />
       {photoSrc && isCropping && (
-        <div className="cropContainer">
+        <div className='cropContainer'>
           <Cropper
             image={photoSrc}
             crop={crop}
@@ -118,13 +119,13 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             onCropComplete={onCropComplete}
           />
           <button
-            className="generalButton__primary"
+            className='generalButton__primary'
             onClick={handleSave}
             style={{
-              position: "absolute",
-              bottom: "10px",
-              left: "50%",
-              transform: "translateX(-50%)",
+              position: 'absolute',
+              bottom: '10px',
+              left: '50%',
+              transform: 'translateX(-50%)',
             }}
           >
             Save
@@ -132,10 +133,10 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
         </div>
       )}
       {photoSrc && !isCropping && (
-        <div className="photoContainer">
-          <img className="photo" src={photoSrc} alt="Captured or Uploaded" />
+        <div className='photoContainer'>
+          <img className='photo' src={photoSrc} alt='Captured or Uploaded' />
           <button
-            className="generalButton__primary"
+            className='generalButton__primary'
             onClick={handleCropAndAnalyze}
           >
             Analyze
