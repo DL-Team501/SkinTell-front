@@ -1,12 +1,12 @@
-import React, { useMemo, useState } from "react";
-import { CameraAndUpload, Header } from "../components/shared";
-import { useNavigate } from "react-router-dom";
-import "../styles/components/Identifying.css";
-import { getSkinTypeClassification } from "../api/skinTypeClassification";
-import { getClassificationInfo } from "../util/classification";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { usernameState } from "../atoms/username.atom";
-import { classificationState } from "../atoms/classification.atom";
+import React, { useMemo, useState } from 'react';
+import { CameraAndUpload, Header } from '../components/shared';
+import { useNavigate } from 'react-router-dom';
+import '../styles/components/Identifying.css';
+import { getSkinTypeClassification } from '../api/skinTypeClassification';
+import { getClassificationInfo } from '../util/classification';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { usernameState } from '../atoms/username.atom';
+import { classificationState } from '../atoms/classification.atom';
 
 const Identifying: React.FC = () => {
   const [classification, setClassification] =
@@ -20,11 +20,11 @@ const Identifying: React.FC = () => {
   const navigate = useNavigate();
 
   const navToRecommendation = () => {
-    navigate("/recommendation");
+    navigate('/recommendation');
   };
 
   const navToCheckProduct = () => {
-    navigate("/checkProduct");
+    navigate('/checkProduct');
   };
 
   const displayedClassification = useMemo(
@@ -45,21 +45,21 @@ const Identifying: React.FC = () => {
   };
 
   return (
-    <div className="identifying">
+    <div className='identifying'>
       <Header />
       {!(classification && isNewClassification) && (
-        <div className="identifying__container">
+        <div className='identifying__container'>
           <>
-            <p className="generalTitle generalText">Identifying Your Skin</p>
+            <p className='generalTitle generalText'>Identifying Your Skin</p>
             {classification && (
               <>
-                <p className="generalText ">
+                <p className='generalText '>
                   Hi, {username}!
                   <br />
-                  In your previous picture we saw that you have{" "}
+                  In your previous picture we saw that you have{' '}
                   <b>{displayedClassification?.label?.toLowerCase()}</b>
                 </p>
-                <p className="generalText ">
+                <p className='generalText '>
                   Do you want to take or upload another picture of your face?
                 </p>
               </>
@@ -73,56 +73,57 @@ const Identifying: React.FC = () => {
               resultSetter={setClassification}
               isCropping={isCropping}
               setIsCropping={setIsCropping}
+              cropRatio={1}
             />
           )}
         </div>
       )}
       {photoSrc && classification && isNewClassification && (
-        <div className="identifying__container">
+        <div className='identifying__container'>
           <img
-            className="identifying__photo"
+            className='identifying__photo'
             src={photoSrc}
-            alt="Captured or Uploaded"
+            alt='Captured or Uploaded'
           />
           {heatmap && showHeatmap && (
             <img
-              className="identifying__photo heatmap"
+              className='identifying__photo heatmap'
               src={`data:image/jpeg;base64,${heatmap}`}
-              alt="heatmap"
+              alt='heatmap'
             />
           )}
-          <div className="classification__title">
-            <p className="generalTitle generalText">
+          <div className='classification__title'>
+            <p className='generalTitle generalText'>
               {displayedClassification?.label}
             </p>
             {showHeatmap ? (
               <button
-                className="why__button"
+                className='why__button'
                 onClick={() => setShowHeatmap(false)}
               >
                 Got it!
               </button>
             ) : (
               <button
-                className="why__button"
+                className='why__button'
                 onClick={() => setShowHeatmap(true)}
               >
                 Why?
               </button>
             )}
           </div>
-          <p className="generalText classification__description">
+          <p className='generalText classification__description'>
             {displayedClassification?.description}
           </p>
           <button
-            className="generalButton__primary"
+            className='generalButton__primary'
             onClick={navToRecommendation}
           >
             Recommend me a product!
           </button>
         </div>
       )}
-      <button className="generalButton__secondary" onClick={navToCheckProduct}>
+      <button className='generalButton__secondary' onClick={navToCheckProduct}>
         Check your product
       </button>
     </div>

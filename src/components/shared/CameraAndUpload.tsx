@@ -26,7 +26,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   resultSetter,
   isCropping,
   setIsCropping,
-  cropRatio = 1,
+  cropRatio,
 }) => {
   const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
