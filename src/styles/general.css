@@ -8,6 +8,16 @@
   padding: 0 1rem;
 }
 
+.iconButton__primary {
+  cursor: pointer;
+  color: var(--main-bg-color);
+  background-color: var(--main-font-color);
+  border: none;
+  border-radius: 30px;
+  height: 40px;
+  width: 40px;
+}
+
 .generalButton__secondary {
   cursor: pointer;
   color: var(--main-font-color);

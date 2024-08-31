@@ -45,22 +45,22 @@ const Identifying: React.FC = () => {
   };
 
   return (
-    <div className='identifying'>
+    <div className="identifying">
       <Header />
       {!(classification && isNewClassification) && (
-        <div className='identifying__container'>
+        <div className="identifying__container">
           <>
-            <p className='generalTitle generalText'>Identifying Your Skin</p>
+            <p className="generalTitle generalText">
+              Identify Your Facial Skin Condition
+            </p>
             {classification && (
               <>
-                <p className='generalText '>
-                  Hi, {username}!
+                <p className="generalText ">
+                  From your profile history, it looks you have{' '}
+                  <b>{displayedClassification?.label?.toLowerCase()}</b>.
                   <br />
-                  In your previous picture we saw that you have{' '}
-                  <b>{displayedClassification?.label?.toLowerCase()}</b>
-                </p>
-                <p className='generalText '>
-                  Do you want to take or upload another picture of your face?
+                  <br />
+                  Classify your face again?
                 </p>
               </>
             )}
@@ -79,51 +79,51 @@ const Identifying: React.FC = () => {
         </div>
       )}
       {photoSrc && classification && isNewClassification && (
-        <div className='identifying__container'>
+        <div className="identifying__container">
           <img
-            className='identifying__photo'
+            className="identifying__photo"
             src={photoSrc}
-            alt='Captured or Uploaded'
+            alt="Captured or Uploaded"
           />
           {heatmap && showHeatmap && (
             <img
-              className='identifying__photo heatmap'
+              className="identifying__photo heatmap"
               src={`data:image/jpeg;base64,${heatmap}`}
-              alt='heatmap'
+              alt="heatmap"
             />
           )}
-          <div className='classification__title'>
-            <p className='generalTitle generalText'>
+          <div className="classification__title">
+            <p className="generalTitle generalText">
               {displayedClassification?.label}
             </p>
             {showHeatmap ? (
               <button
-                className='why__button'
+                className="why__button"
                 onClick={() => setShowHeatmap(false)}
               >
                 Got it!
               </button>
             ) : (
               <button
-                className='why__button'
+                className="why__button"
                 onClick={() => setShowHeatmap(true)}
               >
                 Why?
               </button>
             )}
           </div>
-          <p className='generalText classification__description'>
+          <p className="generalText calssification__description">
             {displayedClassification?.description}
           </p>
           <button
-            className='generalButton__primary'
+            className="generalButton__primary"
             onClick={navToRecommendation}
           >
             Recommend me a product!
           </button>
         </div>
       )}
-      <button className='generalButton__secondary' onClick={navToCheckProduct}>
+      <button className="generalButton__secondary" onClick={navToCheckProduct}>
         Check your product
       </button>
     </div>

@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Header } from "../components/shared";
-import "../styles/components/Registration.css";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Header } from '../components/shared';
+import '../styles/components/Registration.css';
 
 const Registration: React.FC = () => {
-  const [userName, setUserName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [userName, setUserName] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:8000/register", {
-      method: "POST",
+    const response = await fetch('http://localhost:8000/register', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         username: userName,
@@ -24,11 +24,11 @@ const Registration: React.FC = () => {
     });
 
     if (response.ok) {
-      console.log("User registered successfully");
-      navigate("/login");
+      console.log('User registered successfully');
+      navigate('/login');
     } else {
-      setErrorMessage("This username already exists.");
-      console.error("Failed to register user");
+      setErrorMessage('This username already exists.');
+      console.error('Failed to register user');
     }
   };
 
@@ -63,7 +63,7 @@ const Registration: React.FC = () => {
           type="submit"
           className="registration__button generalButton__primary"
         >
-          Sign in
+          Sign Me!
         </button>
         {errorMessage && (
           <p className="registration__errorMessage">{errorMessage}</p>
