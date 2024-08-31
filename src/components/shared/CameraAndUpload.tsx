@@ -7,6 +7,7 @@ import {
   AiOutlineCamera,
   AiOutlineCheck,
   AiOutlineClose,
+  AiOutlineScissor,
   AiOutlineUpload,
 } from 'react-icons/ai';
 
@@ -180,8 +181,8 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             onZoomChange={setZoom}
             onCropComplete={onCropComplete}
           />
-          <button className="generalButton__primary save" onClick={handleSave}>
-            Crop
+          <button className="iconButton__primary save" onClick={handleSave}>
+            <AiOutlineScissor size={'small'} />
           </button>
         </div>
       )}
