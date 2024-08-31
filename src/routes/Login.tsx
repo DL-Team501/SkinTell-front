@@ -6,12 +6,7 @@ import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { usernameState } from '../atoms/username.atom';
 import { classificationState } from '../atoms/classification.atom';
 
-export interface ILoginProps {
-  authenticated: boolean;
-  setAuthenticated: (auth: boolean) => void;
-}
-
-const Login: React.FC<ILoginProps> = ({ authenticated, setAuthenticated }) => {
+const Login: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -43,7 +38,6 @@ const Login: React.FC<ILoginProps> = ({ authenticated, setAuthenticated }) => {
         data.classification
           ? setClassification([data.classification])
           : resetClassification();
-        setAuthenticated(true);
         navigate('/identifying');
       } else {
         setErrorMessage(
