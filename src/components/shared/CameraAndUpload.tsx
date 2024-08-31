@@ -5,7 +5,8 @@ import getCroppedImg from '../../utils/cropImage';
 import '../../styles/components/CameraAndUpload.css';
 import {
   AiOutlineCamera,
-  AiOutlineSearch,
+  AiOutlineCheck,
+  AiOutlineClose,
   AiOutlineUpload,
 } from 'react-icons/ai';
 
@@ -163,19 +164,28 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             onCropComplete={onCropComplete}
           />
           <button className="generalButton__primary save" onClick={handleSave}>
-            Save
+            Crop
           </button>
         </div>
       )}
       {photoSrc && !isCropping && (
         <div className="photoContainer">
           <img className="photo" src={photoSrc} alt="Captured or Uploaded" />
-          <button
-            className="generalButton__primary"
-            onClick={handleCropAndAnalyze}
-          >
-            Classify
-          </button>
+          <div>
+            <button
+              className="iconButton__primary"
+              onClick={handleCropAndAnalyze}
+              style={{ marginRight: '10px' }}
+            >
+              <AiOutlineCheck size={'small'} />
+            </button>
+            <button
+              className="iconButton__primary"
+              onClick={() => setIsCropping(true)}
+            >
+              <AiOutlineClose size={'small'} />
+            </button>
+          </div>
         </div>
       )}
     </div>

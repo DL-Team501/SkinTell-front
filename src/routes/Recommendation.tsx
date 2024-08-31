@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import products from '../assets/products.json';
 import { Header } from '../components/shared';
@@ -24,25 +24,25 @@ const Recommendation: React.FC = () => {
   };
 
   return (
-    <div className='recommendation'>
+    <div className="recommendation">
       <Header />
-      <div className='recommendation__container'>
-        <div className='generalTitle generalText'>Recommended products</div>
-        <div className='generalText'>For {skinType}</div>
-        <div className='recommendation__productList'>
-          {recommendedProducts.map(product => (
-            <div className='recommendation__product' key={product.src}>
+      <div className="recommendation__container">
+        <div className="generalTitle generalText">Recommended products</div>
+        <div className="generalText">For {skinType}</div>
+        <div className="recommendation__productList">
+          {recommendedProducts.map((product) => (
+            <div className="recommendation__product" key={product.src}>
               <img
-                className='recommendation__productImage'
+                className="recommendation__productImage"
                 src={productImage}
-                alt='product'
+                alt="product"
               ></img>
-              <span className='generalText'>{product.type}</span>
+              <span className="generalText">{product.type}</span>
             </div>
           ))}
         </div>
       </div>
-      <button className='generalButton__secondary' onClick={navToCheckProduct}>
+      <button className="generalButton__secondary" onClick={navToCheckProduct}>
         Check your product
       </button>
     </div>

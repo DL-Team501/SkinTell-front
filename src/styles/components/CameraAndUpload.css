@@ -1,6 +1,6 @@
 .photo {
-  height: 10rem;
-  width: 10rem;
+  height: 250px;
+  width: 250px;
 }
 
 .cameraAndUpload {
@@ -11,8 +11,9 @@
 
 .cropContainer {
   position: relative;
-  height: 400px;
-  margin-top: 1rem;
+  height: 250px;
+  width: 250px;
+  margin-top: 20px;
 }
 
 .photoContainer {
@@ -29,5 +30,6 @@
   position: absolute;
   bottom: 10px;
   left: 50%;
+  top: 260px;
   transform: translateX(-50%);
 }
