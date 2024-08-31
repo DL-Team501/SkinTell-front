@@ -42,7 +42,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
         const fileContent = reader.result;
         if (typeof fileContent === "string") {
           setPhotoSrc(fileContent);
-          setIsCropping(true);
+          setIsCropping(!isCropping);
         }
       };
 

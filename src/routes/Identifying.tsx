@@ -13,6 +13,7 @@ const Identifying: React.FC = () => {
     useRecoilState(classificationState);
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
   const [isCropping, setIsCropping] = useState(false);
+  const [isNewClassification, setIsNewClassification] = useState(false);
   const [heatmap, setHeatmap] = useState<string | null>(null);
   const [showHeatmap, setShowHeatmap] = useState(false);
   const username = useRecoilValue(usernameState);
@@ -26,7 +27,7 @@ const Identifying: React.FC = () => {
     navigate("/checkProduct");
   };
 
-  const displayedCalssification = useMemo(
+  const displayedClassification = useMemo(
     () => getClassificationInfo(classification?.[0]),
     [classification]
   );
@@ -38,6 +39,7 @@ const Identifying: React.FC = () => {
     );
 
     setHeatmap(heatmap);
+    setIsNewClassification(true);
 
     return [predicted_class];
   };
@@ -45,36 +47,37 @@ const Identifying: React.FC = () => {
   return (
     <div className="identifying">
       <Header />
-      {!(classification && photoSrc) ? (
+      {!(classification && isNewClassification) && (
         <div className="identifying__container">
-          <p className="generalTitle generalText">Identifying Your Skin</p>
-          {classification ? (
-            <>
-              <p className="generalText ">
-                Hi, {username}!
-                <br />
-                In your previous picture we saw that you have{" "}
-                <b>{displayedCalssification?.label?.toLowerCase()}</b>
-              </p>
-              <p className="generalText ">
-                Do you want to take or upload a another picture of your face?
-              </p>
-            </>
-          ) : (
-            <p className="generalText ">
-              Take or upload a picture of your face
-            </p>
+          <>
+            <p className="generalTitle generalText">Identifying Your Skin</p>
+            {classification && (
+              <>
+                <p className="generalText ">
+                  Hi, {username}!
+                  <br />
+                  In your previous picture we saw that you have{" "}
+                  <b>{displayedClassification?.label?.toLowerCase()}</b>
+                </p>
+                <p className="generalText ">
+                  Do you want to take or upload another picture of your face?
+                </p>
+              </>
+            )}
+          </>
+          {!isNewClassification && (
+            <CameraAndUpload
+              photoSrc={photoSrc}
+              setPhotoSrc={setPhotoSrc}
+              imgProccess={getClassification}
+              resultSetter={setClassification}
+              isCropping={isCropping}
+              setIsCropping={setIsCropping}
+            />
           )}
-          <CameraAndUpload
-            photoSrc={photoSrc}
-            setPhotoSrc={setPhotoSrc}
-            imgProccess={getClassification}
-            resultSetter={setClassification}
-            isCropping={isCropping}
-            setIsCropping={setIsCropping}
-          />
         </div>
-      ) : (
+      )}
+      {photoSrc && classification && isNewClassification && (
         <div className="identifying__container">
           <img
             className="identifying__photo"
@@ -90,7 +93,7 @@ const Identifying: React.FC = () => {
           )}
           <div className="classification__title">
             <p className="generalTitle generalText">
-              {displayedCalssification?.label}
+              {displayedClassification?.label}
             </p>
             {showHeatmap ? (
               <button
@@ -108,8 +111,8 @@ const Identifying: React.FC = () => {
               </button>
             )}
           </div>
-          <p className="generalText calssification__description">
-            {displayedCalssification?.description}
+          <p className="generalText classification__description">
+            {displayedClassification?.description}
           </p>
           <button
             className="generalButton__primary"
