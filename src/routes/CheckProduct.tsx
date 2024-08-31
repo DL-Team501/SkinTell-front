@@ -30,7 +30,7 @@ const CheckProduct: React.FC = () => {
       {!classificationLabel && (
         <div className="goBack__container">
           <span className="generalText">
-            Oh, you haven't analyzed your skin yet!
+            Oh, you haven't analyzed your skin yet...
           </span>
           <button
             className="generalButton__secondary"
@@ -45,7 +45,7 @@ const CheckProduct: React.FC = () => {
         <div className="checkProduct__container">
           {classificationLabel ? (
             <span className="generalText">
-              Take a picture of your product's ingredients list!
+              Take a picture of your product's ingredients list
               <br />
               <br />
               Lets see if it fits with{' '}

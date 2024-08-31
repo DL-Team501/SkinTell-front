@@ -1,9 +1,13 @@
-import { AiOutlineCamera } from 'react-icons/ai';
 import React, { useState, useCallback, useRef } from 'react';
 import Cropper, { Area } from 'react-easy-crop';
 import Webcam from 'react-webcam';
 import getCroppedImg from '../../utils/cropImage';
 import '../../styles/components/CameraAndUpload.css';
+import {
+  AiOutlineCamera,
+  AiOutlineSearch,
+  AiOutlineUpload,
+} from 'react-icons/ai';
 
 const videoConstraints = {
   width: 540,
@@ -105,19 +109,19 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   return (
     <div className="cameraAndUpload">
       {!isCameraOpen && (
-        <>
+        <div>
           <button
             onClick={openCamera}
-            className="generalButton__primary"
+            className="iconButton__primary"
             style={{ marginRight: '10px' }}
           >
-            Open Camera
+            <AiOutlineCamera size={'small'} />
           </button>
           <button
-            className="generalButton__primary"
+            className="iconButton__primary"
             onClick={() => fileInputRef.current?.click()}
           >
-            <label htmlFor="fileInput">Upload Photo</label>
+            <AiOutlineUpload size={'small'} />
           </button>
           <input
             ref={fileInputRef}
@@ -128,7 +132,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             onChange={handleFileChange}
             style={{ display: 'none' }}
           />
-        </>
+        </div>
       )}
       {isCameraOpen && (
         <>
@@ -170,7 +174,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             className="generalButton__primary"
             onClick={handleCropAndAnalyze}
           >
-            Analyze
+            Classify
           </button>
         </div>
       )}
