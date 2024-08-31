@@ -36,6 +36,8 @@
   width: 100%;
   color: var(--main-font-color);
   gap: 0.3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .checkProduct__skinTypesItem {

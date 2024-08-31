@@ -1,7 +1,18 @@
-export enum SkinTypes {
-  Oily = "Oily Skin",
-  Normal = "Normal Skin",
-  Dry = "Dry Skin",
-  Combination = "Combination skin",
-  Sensitive = "Sensitive skin",
+export enum ProductSkinTypes {
+  oily = 'Oily skin',
+  normal = 'Normal skin',
+  dry = 'Dry skin',
+  combination = 'Combination skin',
+  sensitive = 'Sensitive skin',
+}
+export enum ProductSkinConditions {
+  pores = 'Pores',
+  dullness = 'Dullness',
+  uneven = 'Uneven',
+  wrinkles = 'Wrinkles',
+  acne = 'Acne',
+  blemishes = 'Blemishes',
+  redness = 'Redness',
+  'dark circle' = 'Dark',
+  puffiness = 'Puffiness',
 }

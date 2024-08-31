@@ -1,0 +1,27 @@
+.tabs {
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    left: 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.tab {
+    width: 50%;
+    background-color: var(--main-bg-color);
+    color: var(--main-font-color);
+    border: none;
+    height: 60px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: medium;
+    border-radius: 10px 10px 0 0;
+}
+
+.tab-focus {
+    background-color: var(--secondary-bg-color);
+}
