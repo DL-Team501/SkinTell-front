@@ -1,9 +1,9 @@
 server {
-    listen $PORT;  # Use the port assigned by Heroku
+    listen 80;
 
     server_name localhost;
 
-    root /app/public;  # Adjust this to your static files' location
+    root /usr/share/nginx/html;
 
     index index.html;
 
@@ -12,7 +12,4 @@ server {
     }
 
     error_page 404 /index.html;
-
-    error_log /tmp/error.log;  # Optional: Log errors to a temporary file
-    access_log /tmp/access.log; # Optional: Log access requests to a temporary file
 }
