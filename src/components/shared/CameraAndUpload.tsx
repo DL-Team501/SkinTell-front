@@ -148,7 +148,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
           <br />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <button onClick={capturePhoto} className="generalButton__primary">
-              Capture Photo
+              Capture
             </button>
           </div>
         </>

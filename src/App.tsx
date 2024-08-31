@@ -12,6 +12,7 @@ import './App.css';
 import './variables.css';
 import './styles/general.css';
 import { authenticatedState } from './atoms/username.atom';
+import { Tabs } from './components/shared/Tabs';
 
 const App: React.FC = () => {
   const authenticated = useRecoilValue(authenticatedState);
@@ -19,24 +20,25 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Navigate to='/login' />} />
-        <Route path='/login' element={<Login />} />
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
         <Route
-          path='/identifying'
-          element={authenticated ? <Identifying /> : <Navigate to='/login' />}
+          path="/identifying"
+          element={authenticated ? <Identifying /> : <Navigate to="/login" />}
         />
         <Route
-          path='/recommendation'
+          path="/recommendation"
           element={
-            authenticated ? <Recommendation /> : <Navigate to='/login' />
+            authenticated ? <Recommendation /> : <Navigate to="/login" />
           }
         />
         <Route
-          path='/checkProduct'
-          element={authenticated ? <CheckProduct /> : <Navigate to='/login' />}
+          path="/checkProduct"
+          element={authenticated ? <CheckProduct /> : <Navigate to="/login" />}
         />
-        <Route path='/registration' element={<Registration />} />
+        <Route path="/registration" element={<Registration />} />
       </Routes>
+      <Tabs />
     </BrowserRouter>
   );
 };
