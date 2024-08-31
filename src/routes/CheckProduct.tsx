@@ -23,15 +23,16 @@ const CheckProduct: React.FC = () => {
   };
 
   return (
-    <div className='checkProduct'>
+    <div className="checkProduct">
       <Header />
+      <p className="generalTitle generalText">Check A Product</p>
       {!classificationLabel && (
-        <div className='goBack__container'>
-          <span className='generalText'>
-            Hi! We see you haven't analyzed your skin yet
+        <div className="goBack__container">
+          <span className="generalText">
+            Oh, you haven't analyzed your skin yet!
           </span>
           <button
-            className='generalButton__secondary'
+            className="generalButton__secondary"
             onClick={navToIdentifying}
           >
             Go Back
@@ -40,17 +41,21 @@ const CheckProduct: React.FC = () => {
       )}
 
       {!matchSkinTypes.length ? (
-        <div className='checkProduct__container'>
+        <div className="checkProduct__container">
           {classificationLabel ? (
-            <span className='generalText'>
-              Take a picture of your product's ingredients list, see if you can
-              use them with <b>{classificationLabel.toLowerCase()}</b>
+            <span className="generalText">
+              Take a picture of your product's ingredients list!
+              <br />
+              <br />
+              Lets see if it fits with{' '}
+              <b>{classificationLabel.toLowerCase()}</b>
             </span>
           ) : (
-            <span className='generalText'>
-              If you're not intereseted,
+            <span className="generalText">
+              <b>or</b>
               <br />
-              Take a picture of your product's ingredients list anyway
+              <br />
+              Check your product's ingredients list anyway
             </span>
           )}
           <CameraAndUpload
@@ -61,22 +66,22 @@ const CheckProduct: React.FC = () => {
           />
         </div>
       ) : (
-        <div className='checkProduct__container'>
+        <div className="checkProduct__container">
           <img
-            className='checkProduct__photo'
+            className="checkProduct__photo"
             src={photoSrc!}
-            alt='Captured or Uploaded'
+            alt="Captured or Uploaded"
           />
-          <span className='generalText generalTitle'>
+          <span className="generalText generalTitle">
             Skintelligent Recommends:
           </span>
-          <div className='checkProduct__skinTypesList'>
-            {Object.keys(SkinTypes).map(type => (
-              <div className='checkProduct__skinTypesItem'>
-                <span className='checkProduct__skinTypesClass'>
+          <div className="checkProduct__skinTypesList">
+            {Object.keys(SkinTypes).map((type) => (
+              <div className="checkProduct__skinTypesItem">
+                <span className="checkProduct__skinTypesClass">
                   {matchSkinTypes.includes(type) ? 'V' : 'X'}
                 </span>
-                <span className='checkProduct__skinTypesText'>{type}</span>
+                <span className="checkProduct__skinTypesText">{type}</span>
               </div>
             ))}
           </div>

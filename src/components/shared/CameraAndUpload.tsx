@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { AiOutlineCamera } from 'react-icons/ai';
 import '../../styles/components/CameraAndUpload.css';
 export interface ICameraAndUploadProps {
   photoSrc: string | null;
@@ -13,6 +14,8 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   imgProccess,
   resultSetter,
 }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -48,21 +51,29 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   };
 
   return (
-    <div className='cameraAndUpload'>
-      <button className='generalButton__primary'>
-        <label htmlFor='fileInput'>Open Camera or Upload Photo</label>
-      </button>
-      <input
-        id='fileInput'
-        type='file'
-        accept='image/*'
-        capture='environment'
-        onChange={handleFileChange}
-        style={{ display: 'none' }}
-      />
+    <div className="cameraAndUpload">
+      {fileInputRef && (
+        <>
+          <button
+            className="iconButton__primary"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <AiOutlineCamera size={'large'} />
+          </button>
+          <input
+            id="fileInput"
+            type="file"
+            accept="image/*"
+            capture="environment"
+            onChange={handleFileChange}
+            hidden
+            ref={fileInputRef}
+          />
+        </>
+      )}
       {photoSrc && (
-        <div className='photoContainer'>
-          <img className='photo' src={photoSrc} alt='Captured or Uploaded' />
+        <div className="photoContainer">
+          <img className="photo" src={photoSrc} alt="Captured or Uploaded" />
         </div>
       )}
     </div>
