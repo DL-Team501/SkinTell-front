@@ -1,12 +1,12 @@
-import React, { useMemo, useState } from 'react';
-import { CameraAndUpload, Header } from '../components/shared';
-import { useNavigate } from 'react-router-dom';
-import '../styles/components/CheckProduct.css';
-import { SkinTypes } from '../generalTypes';
-import { getSkinTypeByIngredients } from '../api/ingredients';
-import { getClassificationInfo } from '../util/classification';
-import { useRecoilValue } from 'recoil';
-import { classificationState } from '../atoms/classification.atom';
+import React, { useMemo, useState } from "react";
+import { CameraAndUpload, Header } from "../components/shared";
+import { useNavigate } from "react-router-dom";
+import "../styles/components/CheckProduct.css";
+import { SkinTypes } from "../generalTypes";
+import { getSkinTypeByIngredients } from "../api/ingredients";
+import { getClassificationInfo } from "../util/classification";
+import { useRecoilValue } from "recoil";
+import { classificationState } from "../atoms/classification.atom";
 
 const CheckProduct: React.FC = () => {
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
@@ -17,21 +17,22 @@ const CheckProduct: React.FC = () => {
     [classification]
   );
   const navigate = useNavigate();
+  const [isCropping, setIsCropping] = useState(false);
 
   const navToIdentifying = () => {
-    navigate('/identifying');
+    navigate("/identifying");
   };
 
   return (
-    <div className='checkProduct'>
+    <div className="checkProduct">
       <Header />
       {!classificationLabel && (
-        <div className='goBack__container'>
-          <span className='generalText'>
+        <div className="goBack__container">
+          <span className="generalText">
             Hi! We see you haven't analyzed your skin yet
           </span>
           <button
-            className='generalButton__secondary'
+            className="generalButton__secondary"
             onClick={navToIdentifying}
           >
             Go Back
@@ -40,14 +41,14 @@ const CheckProduct: React.FC = () => {
       )}
 
       {!matchSkinTypes.length ? (
-        <div className='checkProduct__container'>
+        <div className="checkProduct__container">
           {classificationLabel ? (
-            <span className='generalText'>
+            <span className="generalText">
               Take a picture of your product's ingredients list, see if you can
               use them with <b>{classificationLabel.toLowerCase()}</b>
             </span>
           ) : (
-            <span className='generalText'>
+            <span className="generalText">
               If you're not intereseted,
               <br />
               Take a picture of your product's ingredients list anyway
@@ -58,25 +59,27 @@ const CheckProduct: React.FC = () => {
             setPhotoSrc={setPhotoSrc}
             imgProccess={getSkinTypeByIngredients}
             resultSetter={setMatchSkinTypes}
+            isCropping={isCropping}
+            setIsCropping={setIsCropping}
           />
         </div>
       ) : (
-        <div className='checkProduct__container'>
+        <div className="checkProduct__container">
           <img
-            className='checkProduct__photo'
+            className="checkProduct__photo"
             src={photoSrc!}
-            alt='Captured or Uploaded'
+            alt="Captured or Uploaded"
           />
-          <span className='generalText generalTitle'>
+          <span className="generalText generalTitle">
             Skintelligent Recommends:
           </span>
-          <div className='checkProduct__skinTypesList'>
-            {Object.keys(SkinTypes).map(type => (
-              <div className='checkProduct__skinTypesItem'>
-                <span className='checkProduct__skinTypesClass'>
-                  {matchSkinTypes.includes(type) ? 'V' : 'X'}
+          <div className="checkProduct__skinTypesList">
+            {Object.keys(SkinTypes).map((type) => (
+              <div className="checkProduct__skinTypesItem" key={type}>
+                <span className="checkProduct__skinTypesClass">
+                  {matchSkinTypes.includes(type) ? "V" : "X"}
                 </span>
-                <span className='checkProduct__skinTypesText'>{type}</span>
+                <span className="checkProduct__skinTypesText">{type}</span>
               </div>
             ))}
           </div>
