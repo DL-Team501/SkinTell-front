@@ -7,6 +7,8 @@ import { getSkinTypeByIngredients } from '../api/ingredients';
 import { getClassificationInfo } from '../util/classification';
 import { useRecoilValue } from 'recoil';
 import { classificationState } from '../atoms/classification.atom';
+import { FaCheck } from 'react-icons/fa';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const CheckProduct: React.FC = () => {
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
@@ -94,7 +96,11 @@ const CheckProduct: React.FC = () => {
             {Object.keys(SkinTypes).map((type) => (
               <div className="checkProduct__skinTypesItem" key={type}>
                 <span className="checkProduct__skinTypesClass">
-                  {matchSkinTypes.includes(type) ? 'V' : 'X'}
+                  {matchSkinTypes.includes(type) ? (
+                    <FaCheck style={{ color: 'green', fontSize: '1em' }} />
+                  ) : (
+                    <AiOutlineClose style={{ color: 'red', fontSize: '1em' }} />
+                  )}
                 </span>
                 <span className="checkProduct__skinTypesText">
                   {SkinTypes[type as keyof typeof SkinTypes]}
@@ -103,13 +109,17 @@ const CheckProduct: React.FC = () => {
             ))}
           </div>
           <span className="generalText generalTitle">
-            Match for skin condition
+            Match for skin condition:
           </span>
           <div className="checkProduct__skinTypesList">
             {Object.keys(SkinConditions).map((type) => (
               <div className="checkProduct__skinTypesItem" key={type}>
                 <span className="checkProduct__skinTypesClass">
-                  {matchSkinTypes.includes(type) ? 'V' : 'X'}
+                  {matchSkinTypes.includes(type) ? (
+                    <FaCheck style={{ color: 'green', fontSize: '1em' }} />
+                  ) : (
+                    <AiOutlineClose style={{ color: 'red', fontSize: '1em' }} />
+                  )}{' '}
                 </span>
                 <span className="checkProduct__skinTypesText">
                   {SkinConditions[type as keyof typeof SkinConditions]}
