@@ -1,6 +1,5 @@
 import React from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
-
 import logo from '../../assets/LogoWithText.png';
 import '../../styles/components/Header.css';
 import { useRecoilValue } from 'recoil';

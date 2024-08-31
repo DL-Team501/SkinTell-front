@@ -2,3 +2,30 @@
   height: 10rem;
   width: 10rem;
 }
+
+.cameraAndUpload {
+  position: relative;
+}
+
+.cropContainer {
+  position: relative;
+  height: 400px;
+  margin-top: 1rem;
+}
+
+.photoContainer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.save {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}

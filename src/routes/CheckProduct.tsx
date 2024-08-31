@@ -17,6 +17,7 @@ const CheckProduct: React.FC = () => {
     [classification]
   );
   const navigate = useNavigate();
+  const [isCropping, setIsCropping] = useState(false);
 
   const navToIdentifying = () => {
     navigate('/identifying');
@@ -63,6 +64,8 @@ const CheckProduct: React.FC = () => {
             setPhotoSrc={setPhotoSrc}
             imgProccess={getSkinTypeByIngredients}
             resultSetter={setMatchSkinTypes}
+            isCropping={isCropping}
+            setIsCropping={setIsCropping}
           />
         </div>
       ) : (
@@ -77,7 +80,7 @@ const CheckProduct: React.FC = () => {
           </span>
           <div className="checkProduct__skinTypesList">
             {Object.keys(SkinTypes).map((type) => (
-              <div className="checkProduct__skinTypesItem">
+              <div className="checkProduct__skinTypesItem" key={type}>
                 <span className="checkProduct__skinTypesClass">
                   {matchSkinTypes.includes(type) ? 'V' : 'X'}
                 </span>

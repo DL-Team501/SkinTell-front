@@ -12,6 +12,8 @@ const Identifying: React.FC = () => {
   const [classification, setClassification] =
     useRecoilState(classificationState);
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
+  const [isCropping, setIsCropping] = useState(false);
+  const [isNewClassification, setIsNewClassification] = useState(false);
   const [heatmap, setHeatmap] = useState<string | null>(null);
   const [showHeatmap, setShowHeatmap] = useState(false);
   const username = useRecoilValue(usernameState);
@@ -25,7 +27,7 @@ const Identifying: React.FC = () => {
     navigate('/checkProduct');
   };
 
-  const displayedCalssification = useMemo(
+  const displayedClassification = useMemo(
     () => getClassificationInfo(classification?.[0]),
     [classification]
   );
@@ -37,6 +39,7 @@ const Identifying: React.FC = () => {
     );
 
     setHeatmap(heatmap);
+    setIsNewClassification(true);
 
     return [predicted_class];
   };
@@ -44,34 +47,38 @@ const Identifying: React.FC = () => {
   return (
     <div className="identifying">
       <Header />
-      {!(classification && photoSrc) ? (
+      {!(classification && isNewClassification) && (
         <div className="identifying__container">
-          <p className="generalTitle generalText">
-            Identify Your Facial Skin Condition
-          </p>
-          {classification ? (
-            <>
-              <p className="generalText ">
-                From your profile history, it looks you have{' '}
-                <b>{displayedCalssification?.label?.toLowerCase()}</b>.
-                <br />
-                <br />
-                Classify your face again?
-              </p>
-            </>
-          ) : (
-            <p className="generalText ">
-              Let us classify your facial condition!
+          <>
+            <p className="generalTitle generalText">
+              Identify Your Facial Skin Condition
             </p>
+            {classification && (
+              <>
+                <p className="generalText ">
+                  From your profile history, it looks you have{' '}
+                  <b>{displayedClassification?.label?.toLowerCase()}</b>.
+                  <br />
+                  <br />
+                  Classify your face again?
+                </p>
+              </>
+            )}
+          </>
+          {!isNewClassification && (
+            <CameraAndUpload
+              photoSrc={photoSrc}
+              setPhotoSrc={setPhotoSrc}
+              imgProccess={getClassification}
+              resultSetter={setClassification}
+              isCropping={isCropping}
+              setIsCropping={setIsCropping}
+              cropRatio={1}
+            />
           )}
-          <CameraAndUpload
-            photoSrc={photoSrc}
-            setPhotoSrc={setPhotoSrc}
-            imgProccess={getClassification}
-            resultSetter={setClassification}
-          />
         </div>
-      ) : (
+      )}
+      {photoSrc && classification && isNewClassification && (
         <div className="identifying__container">
           <img
             className="identifying__photo"
@@ -87,7 +94,7 @@ const Identifying: React.FC = () => {
           )}
           <div className="classification__title">
             <p className="generalTitle generalText">
-              {displayedCalssification?.label}
+              {displayedClassification?.label}
             </p>
             {showHeatmap ? (
               <button
@@ -106,7 +113,7 @@ const Identifying: React.FC = () => {
             )}
           </div>
           <p className="generalText calssification__description">
-            {displayedCalssification?.description}
+            {displayedClassification?.description}
           </p>
           <button
             className="generalButton__primary"
