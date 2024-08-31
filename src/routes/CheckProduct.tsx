@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { CameraAndUpload, Header } from '../components/shared';
 import { useNavigate } from 'react-router-dom';
 import '../styles/components/CheckProduct.css';
-import { SkinTypes } from '../generalTypes';
+import { SkinConditions, SkinTypes } from '../generalTypes';
 import { getSkinTypeByIngredients } from '../api/ingredients';
 import { getClassificationInfo } from '../util/classification';
 import { useRecoilValue } from 'recoil';
@@ -10,7 +10,7 @@ import { classificationState } from '../atoms/classification.atom';
 
 const CheckProduct: React.FC = () => {
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
-  const [matchSkinTypes, setMatchSkinTypes] = useState<string[]>([]); // TODO: change to the backend type
+  const [matchSkinTypes, setMatchSkinTypes] = useState<string[] | null>(null);
   const classification = useRecoilValue(classificationState);
   const classificationLabel = useMemo<string | undefined>(
     () => getClassificationInfo(classification?.[0])?.label,
@@ -21,6 +21,20 @@ const CheckProduct: React.FC = () => {
 
   const navToIdentifying = () => {
     navigate('/identifying');
+  };
+
+  const updateMatchingSkinTypes = (skinTypes: string[]) => {
+    setMatchSkinTypes([
+      ...new Set(
+        skinTypes.map((currSkinType) =>
+          currSkinType === 'oiliness'
+            ? 'oily'
+            : currSkinType === 'dryness'
+            ? 'dry'
+            : currSkinType
+        )
+      ),
+    ]);
   };
 
   return (
@@ -41,7 +55,7 @@ const CheckProduct: React.FC = () => {
         </div>
       )}
 
-      {!matchSkinTypes.length ? (
+      {!matchSkinTypes ? (
         <div className="checkProduct__container">
           {classificationLabel ? (
             <span className="generalText">
@@ -63,7 +77,7 @@ const CheckProduct: React.FC = () => {
             photoSrc={photoSrc}
             setPhotoSrc={setPhotoSrc}
             imgProccess={getSkinTypeByIngredients}
-            resultSetter={setMatchSkinTypes}
+            resultSetter={updateMatchingSkinTypes}
             isCropping={isCropping}
             setIsCropping={setIsCropping}
           />
@@ -75,16 +89,31 @@ const CheckProduct: React.FC = () => {
             src={photoSrc!}
             alt="Captured or Uploaded"
           />
-          <span className="generalText generalTitle">
-            Skintelligent Recommends:
-          </span>
+          <span className="generalText generalTitle">Match for skin type:</span>
           <div className="checkProduct__skinTypesList">
             {Object.keys(SkinTypes).map((type) => (
               <div className="checkProduct__skinTypesItem" key={type}>
                 <span className="checkProduct__skinTypesClass">
                   {matchSkinTypes.includes(type) ? 'V' : 'X'}
                 </span>
-                <span className="checkProduct__skinTypesText">{type}</span>
+                <span className="checkProduct__skinTypesText">
+                  {SkinTypes[type as keyof typeof SkinTypes]}
+                </span>
+              </div>
+            ))}
+          </div>
+          <span className="generalText generalTitle">
+            Match for skin condition
+          </span>
+          <div className="checkProduct__skinTypesList">
+            {Object.keys(SkinConditions).map((type) => (
+              <div className="checkProduct__skinTypesItem" key={type}>
+                <span className="checkProduct__skinTypesClass">
+                  {matchSkinTypes.includes(type) ? 'V' : 'X'}
+                </span>
+                <span className="checkProduct__skinTypesText">
+                  {SkinConditions[type as keyof typeof SkinConditions]}
+                </span>
               </div>
             ))}
           </div>
