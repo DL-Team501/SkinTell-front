@@ -1,12 +1,12 @@
-import React, { useMemo, useState } from "react";
-import { CameraAndUpload, Header } from "../components/shared";
-import { useNavigate } from "react-router-dom";
-import "../styles/components/CheckProduct.css";
-import { SkinTypes } from "../generalTypes";
-import { getSkinTypeByIngredients } from "../api/ingredients";
-import { getClassificationInfo } from "../util/classification";
-import { useRecoilValue } from "recoil";
-import { classificationState } from "../atoms/classification.atom";
+import React, { useMemo, useState } from 'react';
+import { CameraAndUpload, Header } from '../components/shared';
+import { useNavigate } from 'react-router-dom';
+import '../styles/components/CheckProduct.css';
+import { SkinTypes } from '../generalTypes';
+import { getSkinTypeByIngredients } from '../api/ingredients';
+import { getClassificationInfo } from '../util/classification';
+import { useRecoilValue } from 'recoil';
+import { classificationState } from '../atoms/classification.atom';
 
 const CheckProduct: React.FC = () => {
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
@@ -20,16 +20,17 @@ const CheckProduct: React.FC = () => {
   const [isCropping, setIsCropping] = useState(false);
 
   const navToIdentifying = () => {
-    navigate("/identifying");
+    navigate('/identifying');
   };
 
   return (
     <div className="checkProduct">
       <Header />
+      <p className="generalTitle generalText">Check A Product</p>
       {!classificationLabel && (
         <div className="goBack__container">
           <span className="generalText">
-            Hi! We see you haven't analyzed your skin yet
+            Oh, you haven't analyzed your skin yet...
           </span>
           <button
             className="generalButton__secondary"
@@ -44,14 +45,18 @@ const CheckProduct: React.FC = () => {
         <div className="checkProduct__container">
           {classificationLabel ? (
             <span className="generalText">
-              Take a picture of your product's ingredients list, see if you can
-              use them with <b>{classificationLabel.toLowerCase()}</b>
+              Take a picture of your product's ingredients list
+              <br />
+              <br />
+              Lets see if it fits with{' '}
+              <b>{classificationLabel.toLowerCase()}</b>
             </span>
           ) : (
             <span className="generalText">
-              If you're not intereseted,
+              <b>or</b>
               <br />
-              Take a picture of your product's ingredients list anyway
+              <br />
+              Check your product's ingredients list anyway
             </span>
           )}
           <CameraAndUpload
@@ -77,7 +82,7 @@ const CheckProduct: React.FC = () => {
             {Object.keys(SkinTypes).map((type) => (
               <div className="checkProduct__skinTypesItem" key={type}>
                 <span className="checkProduct__skinTypesClass">
-                  {matchSkinTypes.includes(type) ? "V" : "X"}
+                  {matchSkinTypes.includes(type) ? 'V' : 'X'}
                 </span>
                 <span className="checkProduct__skinTypesText">{type}</span>
               </div>

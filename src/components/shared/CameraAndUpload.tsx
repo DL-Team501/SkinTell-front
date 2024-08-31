@@ -3,6 +3,12 @@ import Cropper, { Area } from 'react-easy-crop';
 import Webcam from 'react-webcam';
 import getCroppedImg from '../../utils/cropImage';
 import '../../styles/components/CameraAndUpload.css';
+import {
+  AiOutlineCamera,
+  AiOutlineCheck,
+  AiOutlineClose,
+  AiOutlineUpload,
+} from 'react-icons/ai';
 
 const videoConstraints = {
   width: 540,
@@ -28,6 +34,8 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   setIsCropping,
   cropRatio,
 }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
@@ -100,48 +108,52 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   };
 
   return (
-    <div className='cameraAndUpload'>
+    <div className="cameraAndUpload">
       {!isCameraOpen && (
-        <>
+        <div>
           <button
             onClick={openCamera}
-            className='generalButton__primary'
+            className="iconButton__primary"
             style={{ marginRight: '10px' }}
           >
-            Open Camera
+            <AiOutlineCamera size={'small'} />
           </button>
-          <button className='generalButton__primary'>
-            <label htmlFor='fileInput'>Upload Photo</label>
+          <button
+            className="iconButton__primary"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <AiOutlineUpload size={'small'} />
           </button>
           <input
-            id='fileInput'
-            type='file'
-            accept='image/*'
-            capture='environment'
+            ref={fileInputRef}
+            id="fileInput"
+            type="file"
+            accept="image/*"
+            capture="environment"
             onChange={handleFileChange}
             style={{ display: 'none' }}
           />
-        </>
+        </div>
       )}
       {isCameraOpen && (
         <>
           <Webcam
             ref={webcamRef}
             audio={false}
-            screenshotFormat='image/jpeg'
+            screenshotFormat="image/jpeg"
             videoConstraints={videoConstraints}
             onUserMedia={onUserMedia}
           />{' '}
           <br />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <button onClick={capturePhoto} className='generalButton__primary'>
+            <button onClick={capturePhoto} className="generalButton__primary">
               Capture Photo
             </button>
           </div>
         </>
       )}
       {photoSrc && isCropping && (
-        <div className='cropContainer'>
+        <div className="cropContainer">
           <Cropper
             image={photoSrc}
             crop={crop}
@@ -151,20 +163,29 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             onZoomChange={setZoom}
             onCropComplete={onCropComplete}
           />
-          <button className='generalButton__primary save' onClick={handleSave}>
-            Save
+          <button className="generalButton__primary save" onClick={handleSave}>
+            Crop
           </button>
         </div>
       )}
       {photoSrc && !isCropping && (
-        <div className='photoContainer'>
-          <img className='photo' src={photoSrc} alt='Captured or Uploaded' />
-          <button
-            className='generalButton__primary'
-            onClick={handleCropAndAnalyze}
-          >
-            Analyze
-          </button>
+        <div className="photoContainer">
+          <img className="photo" src={photoSrc} alt="Captured or Uploaded" />
+          <div>
+            <button
+              className="iconButton__primary"
+              onClick={handleCropAndAnalyze}
+              style={{ marginRight: '10px' }}
+            >
+              <AiOutlineCheck size={'small'} />
+            </button>
+            <button
+              className="iconButton__primary"
+              onClick={() => setIsCropping(true)}
+            >
+              <AiOutlineClose size={'small'} />
+            </button>
+          </div>
         </div>
       )}
     </div>

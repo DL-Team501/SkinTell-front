@@ -70,33 +70,37 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className='login'>
-      <img src={logo} alt='logo' className='login__image'></img>
+    <div className="login">
+      <img src={logo} alt="logo" className="login__image"></img>
       <form
-        className='login__form'
+        className="login__form"
         onSubmit={handleSubmit}
         onKeyDown={handleKeyDown}
       >
         <input
-          className='login__input'
+          className="login__input"
           value={userName}
           onChange={onChangeUserName}
-          placeholder='Username'
-        ></input>
+          placeholder="Username"
+        />
         <input
-          type='password'
-          className='login__input'
+          type="password"
+          className="login__input"
           value={password}
           onChange={onChangePassword}
-          placeholder='Password'
-        ></input>
-        <button type='submit' className='login__button generalButton__primary'>
-          Log in
+          placeholder="Password"
+        />
+        <span className="login__errorMessage">{errorMessage ?? ' '}</span>
+        <button type="submit" className="login__button generalButton__primary">
+          Log In
         </button>
-        <button className='generalButton__primary' onClick={navToRegistration}>
-          I'm new here
+        <span className="generalText">or</span>
+        <button
+          className="generalButton__secondary"
+          onClick={navToRegistration}
+        >
+          Sign Up
         </button>
-        {errorMessage && <p className='login__errorMessage'>{errorMessage}</p>}
       </form>
     </div>
   );
