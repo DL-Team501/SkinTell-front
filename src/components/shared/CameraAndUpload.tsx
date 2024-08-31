@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import Cropper, { Area } from 'react-easy-crop';
 import Webcam from 'react-webcam';
 import getCroppedImg from '../../utils/cropImage';
@@ -42,6 +42,23 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [isCameraOpen, setIsCameraOpen] = useState<boolean>(false);
   const webcamRef = useRef<Webcam>(null);
+  const [aspectRation, setAspectRatio] = useState<number>();
+
+  useEffect(() => {
+    if (cropRatio) {
+      setAspectRatio(cropRatio);
+    }
+  }, [cropRatio]);
+
+  useEffect(() => {
+    if (!photoSrc || aspectRation) return;
+
+    const img = new Image();
+    img.src = photoSrc;
+    img.onload = () => {
+      setAspectRatio(img.width / img.height);
+    };
+  }, [photoSrc, aspectRation]);
 
   const onCropComplete = useCallback(
     (croppedArea: Area, croppedAreaPixels: Area) => {
@@ -148,7 +165,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
           <br />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <button onClick={capturePhoto} className="generalButton__primary">
-              Capture Photo
+              Capture
             </button>
           </div>
         </>
@@ -159,7 +176,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             image={photoSrc}
             crop={crop}
             zoom={zoom}
-            aspect={cropRatio}
+            aspect={aspectRation}
             onCropChange={setCrop}
             onZoomChange={setZoom}
             onCropComplete={onCropComplete}

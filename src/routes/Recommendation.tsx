@@ -17,11 +17,11 @@ const Recommendation: React.FC = () => {
   const [recommendedProducts, setRecommendedProducts] =
     useState<IProduct[]>(products);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const navToCheckProduct = () => {
-    navigate('/checkProduct');
-  };
+  // const navToCheckProduct = () => {
+  //   navigate('/checkProduct');
+  // };
 
   return (
     <div className="recommendation">
@@ -42,9 +42,9 @@ const Recommendation: React.FC = () => {
           ))}
         </div>
       </div>
-      <button className="generalButton__secondary" onClick={navToCheckProduct}>
+      {/* <button className="generalButton__secondary" onClick={navToCheckProduct}>
         Check your product
-      </button>
+      </button> */}
     </div>
   );
 };

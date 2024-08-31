@@ -23,9 +23,9 @@ const Identifying: React.FC = () => {
     navigate('/recommendation');
   };
 
-  const navToCheckProduct = () => {
-    navigate('/checkProduct');
-  };
+  // const navToCheckProduct = () => {
+  //   navigate('/checkProduct');
+  // };
 
   const displayedClassification = useMemo(
     () => getClassificationInfo(classification?.[0]),
@@ -123,9 +123,9 @@ const Identifying: React.FC = () => {
           </button>
         </div>
       )}
-      <button className="generalButton__secondary" onClick={navToCheckProduct}>
+      {/* <button className="generalButton__secondary" onClick={navToCheckProduct}>
         Check your product
-      </button>
+      </button> */}
     </div>
   );
 };
