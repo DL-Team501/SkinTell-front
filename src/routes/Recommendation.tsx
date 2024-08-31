@@ -4,7 +4,7 @@ import products from '../assets/products.json';
 import { Header } from '../components/shared';
 import productImage from '../assets/product1.jpg';
 import '../styles/components/Recommendation.css';
-import { SkinTypes } from '../generalTypes';
+import { ProductSkinTypes } from '../generalTypes';
 
 export interface IProduct {
   type: string;
@@ -13,7 +13,7 @@ export interface IProduct {
 }
 
 const Recommendation: React.FC = () => {
-  const skinType = SkinTypes.normal;
+  const skinType = ProductSkinTypes.normal;
   const [recommendedProducts, setRecommendedProducts] =
     useState<IProduct[]>(products);
 
