@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/shared';
 import '../styles/components/Registration.css';
+import { backendUrl } from '../api/config';
 
 const Registration: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
@@ -12,7 +13,7 @@ const Registration: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch('http://localhost:8000/register', {
+    const response = await fetch(`${backendUrl}/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

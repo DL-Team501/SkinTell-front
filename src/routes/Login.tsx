@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { usernameState } from '../atoms/username.atom';
 import { classificationState } from '../atoms/classification.atom';
+import { backendUrl } from '../api/config';
 
 const Login: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
@@ -19,7 +20,7 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/login/', {
+      const response = await fetch(`${backendUrl}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
