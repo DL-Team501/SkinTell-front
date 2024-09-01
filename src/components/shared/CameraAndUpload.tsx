@@ -159,9 +159,9 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             audio={false}
             screenshotFormat="image/jpeg"
             videoConstraints={videoConstraints}
+            className="camera"
             onUserMedia={onUserMedia}
-          />{' '}
-          <br />
+          />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <button onClick={capturePhoto} className="generalButton__primary">
               Capture
