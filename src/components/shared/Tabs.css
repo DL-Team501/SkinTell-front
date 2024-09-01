@@ -1,5 +1,5 @@
 .tabs {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100vw;
     left: 0;
@@ -12,8 +12,7 @@
     background-color: var(--main-bg-color);
     color: var(--main-font-color);
     border: none;
-    height: 60px;
-    padding-bottom: 10px;
+    height: 55px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

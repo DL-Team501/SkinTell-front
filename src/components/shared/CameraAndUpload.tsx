@@ -1,21 +1,12 @@
-import React, {
-  useState,
-  useCallback,
-  useRef,
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import Cropper, { Area } from 'react-easy-crop';
-import Webcam from 'react-webcam';
 import getCroppedImg from '../../utils/cropImage';
 import '../../styles/components/CameraAndUpload.css';
-import { MdOutlineCameraswitch } from 'react-icons/md';
 import {
   AiOutlineCamera,
   AiOutlineCheck,
   AiOutlineClose,
   AiOutlineScissor,
-  AiOutlineUpload,
 } from 'react-icons/ai';
 
 export interface ICameraAndUploadProps {
@@ -42,26 +33,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
-  const [isCameraOpen, setIsCameraOpen] = useState<boolean>(false);
-  const webcamRef = useRef<Webcam>(null);
   const [aspectRation, setAspectRatio] = useState<number>();
-  const [facingMode, setFacingMode] = useState('user');
-
-  const videoConstraints = useMemo(
-    () => ({
-      width: 540,
-      facingMode: facingMode,
-    }),
-    [facingMode]
-  );
-
-  const switchCamera = useCallback(() => {
-    if (facingMode === 'user') {
-      setFacingMode('environment');
-    } else {
-      setFacingMode('user');
-    }
-  }, [facingMode]);
 
   useEffect(() => {
     if (cropRatio) {
@@ -129,37 +101,15 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
     }
   };
 
-  const openCamera = () => setIsCameraOpen(true);
-
-  const capturePhoto = useCallback(async () => {
-    if (webcamRef.current === null) return;
-
-    const imageSrc = webcamRef.current.getScreenshot();
-    setPhotoSrc(imageSrc);
-    setIsCameraOpen(false);
-    setIsCropping(true);
-  }, [webcamRef, setPhotoSrc, setIsCameraOpen, setIsCropping]);
-
-  const onUserMedia = (e: any) => {
-    console.log(e);
-  };
-
   return (
     <div className="cameraAndUpload">
-      {!isCameraOpen && (
+      {
         <div>
-          <button
-            onClick={openCamera}
-            className="iconButton__primary"
-            style={{ marginRight: '10px' }}
-          >
-            <AiOutlineCamera size={'small'} />
-          </button>
           <button
             className="iconButton__primary"
             onClick={() => fileInputRef.current?.click()}
           >
-            <AiOutlineUpload size={'small'} />
+            <AiOutlineCamera size={'small'} />
           </button>
           <input
             ref={fileInputRef}
@@ -170,29 +120,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             style={{ display: 'none' }}
           />
         </div>
-      )}
-      {isCameraOpen && (
-        <>
-          <Webcam
-            ref={webcamRef}
-            audio={false}
-            screenshotFormat="image/jpeg"
-            videoConstraints={videoConstraints}
-            className="camera"
-            onUserMedia={onUserMedia}
-          />
-          <div
-            style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}
-          >
-            <button onClick={switchCamera} className="iconButton__primary">
-              <MdOutlineCameraswitch size={'small'} />
-            </button>
-            <button onClick={capturePhoto} className="generalButton__primary">
-              Capture
-            </button>
-          </div>
-        </>
-      )}
+      }
       {photoSrc && isCropping && (
         <div className="cropContainer">
           <Cropper

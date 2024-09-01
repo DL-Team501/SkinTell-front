@@ -77,18 +77,12 @@ const CheckProduct: React.FC = () => {
   return (
     <div className="checkProduct">
       <Header />
-      <p className="generalTitle generalText">Check A Product</p>
+      <p className="generalTitle generalText">Check a Product</p>
       {!classificationLabel && (
         <div className="goBack__container">
           <span className="generalText">
-            Oh, you haven't analyzed your skin yet...
+            Be aware, you haven't analyzed your skin yet...
           </span>
-          <button
-            className="generalButton__secondary"
-            onClick={navToIdentifying}
-          >
-            Go Back
-          </button>
         </div>
       )}
 
@@ -98,17 +92,11 @@ const CheckProduct: React.FC = () => {
             <span className="generalText">
               Take a picture of your product's ingredients list
               <br />
-              <br />
               Lets see if it fits with{' '}
               <b>{classificationLabel.toLowerCase()}</b>
             </span>
           ) : (
-            <span className="generalText">
-              <b>or</b>
-              <br />
-              <br />
-              Check your product's ingredients list anyway
-            </span>
+            <br />
           )}
           <CameraAndUpload
             photoSrc={photoSrc}

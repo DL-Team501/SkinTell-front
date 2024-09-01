@@ -7,8 +7,11 @@ body {
 }
 
 #root {
-  margin: 2rem;
-  height: 100%;
+  margin-top: 1.5rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 0;
+  height: calc(100vh - 55px - 2rem);
 }
 
 code {
