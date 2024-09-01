@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { CameraAndUpload, Header } from '../components/shared';
 import { useNavigate } from 'react-router-dom';
 import '../styles/components/CheckProduct.css';
@@ -11,9 +11,11 @@ import { FaCheck } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 import { faceTypeToProductTypeMapping } from '../util/faceAndProductMapping';
 import { getCommonValues } from '../util/util';
+import axios from 'axios';
 
 const CheckProduct: React.FC = () => {
   const [photoSrc, setPhotoSrc] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [matchSkinTypes, setMatchSkinTypes] = useState<string[] | null>(null);
   const classification = useRecoilValue(classificationState);
   const classificationLabel = useMemo<string | undefined>(
@@ -24,6 +26,10 @@ const CheckProduct: React.FC = () => {
     () => getClassificationInfo(classification?.[0])?.value,
     [classification]
   );
+
+  useEffect(() => {
+    setErrorMessage(null);
+  }, [photoSrc]);
 
   const navigate = useNavigate();
   const [isCropping, setIsCropping] = useState(false);
@@ -46,6 +52,29 @@ const CheckProduct: React.FC = () => {
         )
       ),
     ]);
+  };
+
+  const proccessIngredientsBySkinType = async (formData: FormData) => {
+    try {
+      return await getSkinTypeByIngredients(formData);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 422) {
+          setErrorMessage(
+            'No recognizable ingredients were found. Please provide a clearer image.'
+          );
+        } else {
+          setErrorMessage(
+            'Something went wrong, please try again or contact support team'
+          );
+        }
+      } else {
+        setErrorMessage(
+          'Something went wrong, please try again or contact support team'
+        );
+      }
+      console.error('An error occurred:', error);
+    }
   };
 
   const getRecommendationMessage = () => {
@@ -101,7 +130,7 @@ const CheckProduct: React.FC = () => {
           <CameraAndUpload
             photoSrc={photoSrc}
             setPhotoSrc={setPhotoSrc}
-            imgProccess={getSkinTypeByIngredients}
+            imgProccess={proccessIngredientsBySkinType}
             resultSetter={updateMatchingSkinTypes}
             isCropping={isCropping}
             setIsCropping={setIsCropping}
@@ -114,31 +143,17 @@ const CheckProduct: React.FC = () => {
             src={photoSrc!}
             alt="Captured or Uploaded"
           />
-          <span className="generalText generalTitle">Match for skin type:</span>
-          <div className="checkProduct__skinTypesList">
-            {Object.keys(ProductSkinTypes).map((type) => (
-              <div className="checkProduct__skinTypesItem" key={type}>
-                <span className="checkProduct__skinTypesClass">
-                  {matchSkinTypes.includes(type) ? (
-                    <FaCheck style={{ color: 'green', fontSize: '1em' }} />
-                  ) : (
-                    <AiOutlineClose style={{ color: 'red', fontSize: '1em' }} />
-                  )}
-                </span>
-                <span className="checkProduct__skinTypesText">
-                  {ProductSkinTypes[type as keyof typeof ProductSkinTypes]}
-                </span>
-              </div>
-            ))}
-          </div>
-          {getCommonValues(Object.keys(ProductSkinConditions), matchSkinTypes)
-            .length ? (
+          {errorMessage ? (
+            <div className="generalText" style={{ color: 'red' }}>
+              {errorMessage}
+            </div>
+          ) : (
             <>
               <span className="generalText generalTitle">
-                Match for skin condition:
+                Match for skin type:
               </span>
               <div className="checkProduct__skinTypesList">
-                {Object.keys(ProductSkinConditions).map((type) => (
+                {Object.keys(ProductSkinTypes).map((type) => (
                   <div className="checkProduct__skinTypesItem" key={type}>
                     <span className="checkProduct__skinTypesClass">
                       {matchSkinTypes.includes(type) ? (
@@ -147,33 +162,63 @@ const CheckProduct: React.FC = () => {
                         <AiOutlineClose
                           style={{ color: 'red', fontSize: '1em' }}
                         />
-                      )}{' '}
+                      )}
                     </span>
                     <span className="checkProduct__skinTypesText">
-                      {
-                        ProductSkinConditions[
-                          type as keyof typeof ProductSkinConditions
-                        ]
-                      }
+                      {ProductSkinTypes[type as keyof typeof ProductSkinTypes]}
                     </span>
                   </div>
                 ))}
               </div>
+              {getCommonValues(
+                Object.keys(ProductSkinConditions),
+                matchSkinTypes
+              ).length ? (
+                <>
+                  <span className="generalText generalTitle">
+                    Match for skin condition:
+                  </span>
+                  <div className="checkProduct__skinTypesList">
+                    {Object.keys(ProductSkinConditions).map((type) => (
+                      <div className="checkProduct__skinTypesItem" key={type}>
+                        <span className="checkProduct__skinTypesClass">
+                          {matchSkinTypes.includes(type) ? (
+                            <FaCheck
+                              style={{ color: 'green', fontSize: '1em' }}
+                            />
+                          ) : (
+                            <AiOutlineClose
+                              style={{ color: 'red', fontSize: '1em' }}
+                            />
+                          )}{' '}
+                        </span>
+                        <span className="checkProduct__skinTypesText">
+                          {
+                            ProductSkinConditions[
+                              type as keyof typeof ProductSkinConditions
+                            ]
+                          }
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+              {classificationValue &&
+              matchSkinTypes &&
+              getCommonValues(
+                faceTypeToProductTypeMapping[classificationValue],
+                matchSkinTypes
+              ).length ? (
+                <span className="generalText generalTitle">
+                  {getRecommendationMessage()}
+                </span>
+              ) : (
+                <> </>
+              )}
             </>
-          ) : (
-            <></>
-          )}
-          {classificationValue &&
-          matchSkinTypes &&
-          getCommonValues(
-            faceTypeToProductTypeMapping[classificationValue],
-            matchSkinTypes
-          ).length ? (
-            <span className="generalText generalTitle">
-              {getRecommendationMessage()}
-            </span>
-          ) : (
-            <> </>
           )}
         </div>
       )}
