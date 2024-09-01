@@ -9,7 +9,7 @@ body {
 #root {
   margin: 2rem;
   margin-bottom: 0;
-  height: calc(100vh - 55px);
+  height: calc(100vh - 55px - 2rem);
 }
 
 code {
