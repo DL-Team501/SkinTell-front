@@ -8,7 +8,8 @@ body {
 
 #root {
   margin: 2rem;
-  height: 100%;
+  margin-bottom: 0;
+  height: calc(100vh - 2rem);
 }
 
 code {
