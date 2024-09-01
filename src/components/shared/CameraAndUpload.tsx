@@ -180,6 +180,8 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             videoConstraints={videoConstraints}
             className="camera"
             onUserMedia={onUserMedia}
+            screenshotQuality={1}
+            imageSmoothing={false}
           />
           <div
             style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}
