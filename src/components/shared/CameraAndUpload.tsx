@@ -147,7 +147,6 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             id="fileInput"
             type="file"
             accept="image/*"
-            capture="environment"
             onChange={handleFileChange}
             style={{ display: 'none' }}
           />
