@@ -13,9 +13,11 @@ import './variables.css';
 import './styles/general.css';
 import { authenticatedState } from './atoms/username.atom';
 import { Tabs } from './components/shared/Tabs';
+import { showTabsState } from './atoms/showTabs.atom';
 
 const App: React.FC = () => {
   const authenticated = useRecoilValue(authenticatedState);
+  const showTabs = useRecoilValue(showTabsState);
 
   return (
     <BrowserRouter>
@@ -38,7 +40,7 @@ const App: React.FC = () => {
         />
         <Route path="/registration" element={<Registration />} />
       </Routes>
-      <Tabs />
+      {showTabs && <Tabs />}
     </BrowserRouter>
   );
 };

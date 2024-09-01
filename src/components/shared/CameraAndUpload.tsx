@@ -17,6 +17,8 @@ import {
   AiOutlineScissor,
   AiOutlineUpload,
 } from 'react-icons/ai';
+import { useSetRecoilState } from 'recoil';
+import { showTabsState } from '../../atoms/showTabs.atom';
 
 export interface ICameraAndUploadProps {
   photoSrc: string | null;
@@ -46,6 +48,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   const webcamRef = useRef<Webcam>(null);
   const [aspectRation, setAspectRatio] = useState<number>();
   const [facingMode, setFacingMode] = useState('user');
+  const setShowTabs = useSetRecoilState(showTabsState);
 
   const videoConstraints = useMemo(
     () => ({
@@ -96,6 +99,7 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
         if (typeof fileContent === 'string') {
           setPhotoSrc(fileContent);
           setIsCropping(!isCropping);
+          setShowTabs(false);
         }
       };
 
@@ -123,13 +127,17 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
 
       const response = await imgProccess(formData);
       resultSetter(Array.isArray(response) ? response : [response]);
+      setShowTabs(true);
       console.log(response);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const openCamera = () => setIsCameraOpen(true);
+  const openCamera = () => {
+    setIsCameraOpen(true);
+    setShowTabs(false);
+  };
 
   const capturePhoto = useCallback(async () => {
     if (webcamRef.current === null) return;
