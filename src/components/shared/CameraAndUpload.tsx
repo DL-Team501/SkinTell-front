@@ -1,8 +1,15 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+} from 'react';
 import Cropper, { Area } from 'react-easy-crop';
 import Webcam from 'react-webcam';
 import getCroppedImg from '../../utils/cropImage';
 import '../../styles/components/CameraAndUpload.css';
+import { MdOutlineCameraswitch } from 'react-icons/md';
 import {
   AiOutlineCamera,
   AiOutlineCheck,
@@ -10,11 +17,6 @@ import {
   AiOutlineScissor,
   AiOutlineUpload,
 } from 'react-icons/ai';
-
-const videoConstraints = {
-  width: 540,
-  facingMode: 'user',
-};
 
 export interface ICameraAndUploadProps {
   photoSrc: string | null;
@@ -43,6 +45,23 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
   const [isCameraOpen, setIsCameraOpen] = useState<boolean>(false);
   const webcamRef = useRef<Webcam>(null);
   const [aspectRation, setAspectRatio] = useState<number>();
+  const [facingMode, setFacingMode] = useState('user');
+
+  const videoConstraints = useMemo(
+    () => ({
+      width: 540,
+      facingMode: facingMode,
+    }),
+    [facingMode]
+  );
+
+  const switchCamera = useCallback(() => {
+    if (facingMode === 'user') {
+      setFacingMode('environment');
+    } else {
+      setFacingMode('user');
+    }
+  }, [facingMode]);
 
   useEffect(() => {
     if (cropRatio) {
@@ -147,7 +166,6 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             id="fileInput"
             type="file"
             accept="image/*"
-            capture="environment"
             onChange={handleFileChange}
             style={{ display: 'none' }}
           />
@@ -160,10 +178,15 @@ const CameraAndUpload: React.FC<ICameraAndUploadProps> = ({
             audio={false}
             screenshotFormat="image/jpeg"
             videoConstraints={videoConstraints}
+            className="camera"
             onUserMedia={onUserMedia}
-          />{' '}
-          <br />
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          />
+          <div
+            style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}
+          >
+            <button onClick={switchCamera} className="iconButton__primary">
+              <MdOutlineCameraswitch size={'small'} />
+            </button>
             <button onClick={capturePhoto} className="generalButton__primary">
               Capture
             </button>
