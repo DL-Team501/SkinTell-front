@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { CameraAndUpload, Header } from '../components/shared';
-import { useNavigate } from 'react-router-dom';
 import '../styles/components/CheckProduct.css';
 import { ProductSkinConditions, ProductSkinTypes } from '../generalTypes';
 import { getSkinTypeByIngredients } from '../api/ingredients';
@@ -9,7 +8,12 @@ import { useRecoilValue } from 'recoil';
 import { classificationState } from '../atoms/classification.atom';
 import { FaCheck } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
-import { faceTypeToProductTypeMapping } from '../util/faceAndProductMapping';
+import { LuHeartCrack, LuHeartHandshake } from 'react-icons/lu';
+import { IoHeartOutline } from 'react-icons/io5';
+import {
+  badMatchFaceTypeToProductTypeMapping,
+  goodMatchFaceTypeToProductTypeMapping,
+} from '../util/faceAndProductMapping';
 import { getCommonValues } from '../util/util';
 import axios from 'axios';
 
@@ -31,12 +35,7 @@ const CheckProduct: React.FC = () => {
     setErrorMessage(null);
   }, [photoSrc]);
 
-  const navigate = useNavigate();
   const [isCropping, setIsCropping] = useState(false);
-
-  const navToIdentifying = () => {
-    navigate('/identifying');
-  };
 
   const updateMatchingSkinTypes = (skinTypes: string[]) => {
     setMatchSkinTypes([
@@ -77,30 +76,52 @@ const CheckProduct: React.FC = () => {
     }
   };
 
-  const getRecommendationMessage = () => {
-    const commonTypes: string[] = getCommonValues(
-      faceTypeToProductTypeMapping[classificationValue!],
-      matchSkinTypes!
-    );
-    let text: string = '';
-    const matchedFaceTypes: string[] = [];
-    const matchedFaceConditions: string[] = [];
-    const skinTypeKeys = Object.keys(ProductSkinTypes) as string[];
-    const skinConditionKeys = Object.keys(ProductSkinConditions) as string[];
-
-    commonTypes.forEach((type) => {
-      if (skinTypeKeys.includes(type)) matchedFaceTypes.push(type);
-      if (skinConditionKeys.includes(type)) matchedFaceConditions.push(type);
-    });
-    if (matchedFaceTypes.length)
-      text = text.concat(matchedFaceTypes.join(', ').concat(' skin, '));
-    if (matchedFaceConditions.length)
-      text = text
-        .concat('skin with '.concat(matchedFaceConditions.join(', ')))
-        .concat(', ');
-
-    return `Based on your skin analysis, this product is suitable for 
-    ${text} which aligns with your skin condition`;
+  const renderMatchMessage = () => {
+    if (classificationValue && matchSkinTypes) {
+      if (
+        getCommonValues(
+          goodMatchFaceTypeToProductTypeMapping[classificationValue],
+          matchSkinTypes
+        ).length
+      ) {
+        return (
+          <span
+            className="generalText generalTitle"
+            style={{ display: 'flex', alignItems: 'center' }}
+          >
+            It's matching your skin &nbsp;
+            <LuHeartHandshake />
+          </span>
+        );
+      } else if (
+        getCommonValues(
+          badMatchFaceTypeToProductTypeMapping[classificationValue],
+          matchSkinTypes
+        ).length
+      ) {
+        return (
+          <span
+            className="generalText generalTitle"
+            style={{ display: 'flex', alignItems: 'center' }}
+          >
+            It's not a good match for you...&nbsp;
+            <LuHeartCrack />
+          </span>
+        );
+      } else {
+        return (
+          <span
+            className="generalText generalTitle"
+            style={{ display: 'flex', alignItems: 'center' }}
+          >
+            normal match&nbsp;
+            <IoHeartOutline />
+          </span>
+        );
+      }
+    } else {
+      return <></>;
+    }
   };
 
   return (
@@ -115,18 +136,17 @@ const CheckProduct: React.FC = () => {
         </div>
       )}
 
+      {classificationLabel ? (
+        <span className="generalText">
+          Take a picture of your product's ingredients list
+          <br />
+          Lets see if it fits with <b>{classificationLabel.toLowerCase()}</b>
+        </span>
+      ) : (
+        <br />
+      )}
       {!matchSkinTypes ? (
         <div className="checkProduct__container">
-          {classificationLabel ? (
-            <span className="generalText">
-              Take a picture of your product's ingredients list
-              <br />
-              Lets see if it fits with{' '}
-              <b>{classificationLabel.toLowerCase()}</b>
-            </span>
-          ) : (
-            <br />
-          )}
           <CameraAndUpload
             photoSrc={photoSrc}
             setPhotoSrc={setPhotoSrc}
@@ -206,18 +226,7 @@ const CheckProduct: React.FC = () => {
               ) : (
                 <></>
               )}
-              {classificationValue &&
-              matchSkinTypes &&
-              getCommonValues(
-                faceTypeToProductTypeMapping[classificationValue],
-                matchSkinTypes
-              ).length ? (
-                <span className="generalText generalTitle">
-                  {getRecommendationMessage()}
-                </span>
-              ) : (
-                <> </>
-              )}
+              {renderMatchMessage()}
             </>
           )}
         </div>
