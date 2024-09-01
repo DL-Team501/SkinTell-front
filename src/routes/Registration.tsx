@@ -13,7 +13,7 @@ const Registration: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch(`${backendUrl}/register`, {
+    const response = await fetch(`${backendUrl}/register/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
