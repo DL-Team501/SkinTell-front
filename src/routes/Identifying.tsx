@@ -115,12 +115,12 @@ const Identifying: React.FC = () => {
           <p className="generalText calssification__description">
             {displayedClassification?.description}
           </p>
-          <button
+          {/* <button
             className="generalButton__primary"
             onClick={navToRecommendation}
           >
             Recommend me a product!
-          </button>
+          </button> */}
         </div>
       )}
       {/* <button className="generalButton__secondary" onClick={navToCheckProduct}>
